@@ -100,7 +100,9 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             {/* Sidebar Filters */}
             <aside className="w-full lg:w-1/4 lg:sticky lg:top-28">
               {/* Note: In a real app, JobFilters would update the URL search params via router.push */}
-              <JobFilters />
+              <Suspense fallback={<div className="h-64 bg-surface-muted animate-pulse rounded-xl" />}>
+                <JobFilters />
+              </Suspense>
             </aside>
 
             {/* Main Content */}
