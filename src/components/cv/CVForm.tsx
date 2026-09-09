@@ -42,7 +42,7 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
   };
 
   const handleRemoveExperience = (index: number) => {
-    const newExp = formData.experience.filter((_, i) => i !== index);
+    const newExp = formData.experience.filter((_: any, i: number) => i !== index);
     setFormData((prev) => ({ ...prev, experience: newExp }));
   };
 

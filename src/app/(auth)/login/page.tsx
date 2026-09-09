@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Briefcase, ArrowRight, Github, Mail, AlertCircle } from "lucide-react";
+import { Briefcase, ArrowRight, Mail, AlertCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {

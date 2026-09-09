@@ -100,7 +100,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             {/* Sidebar Filters */}
             <aside className="w-full lg:w-1/4 lg:sticky lg:top-28">
               {/* Note: In a real app, JobFilters would update the URL search params via router.push */}
-              <JobFilters onFilterChange={() => {}} />
+              <JobFilters />
             </aside>
 
             {/* Main Content */}
