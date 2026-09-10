@@ -17,6 +17,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import IntegrationMarquee from "@/components/home/IntegrationMarquee";
 import JobFilterBar from "@/components/jobs/JobFilterBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -326,7 +327,7 @@ const PLANS = [
   },
   {
     name: "Employer",
-    price: "Rp 99.000",
+    price: "Rp 89.000",
     period: "/bulan",
     description: "Untuk perusahaan",
     features: [
@@ -507,6 +508,7 @@ export default function HomePage() {
           <FeaturesSection />
           <HowItWorksSection />
           <PricingSection />
+          <IntegrationMarquee />
           <CTASection />
         </main>
         <Footer />

@@ -5,7 +5,10 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import JobCard from "@/components/jobs/JobCard";
 import JobFilters from "@/components/jobs/JobFilters";
+import TopJobFilterBar from "@/components/jobs/TopJobFilterBar";
+import Pagination from "@/components/ui/Pagination";
 import { Briefcase } from "lucide-react";
+import { generateMockIndonesianJobs } from "@/lib/mockScraper";
 
 // The search params available to this page
 interface JobsPageProps {
@@ -13,6 +16,8 @@ interface JobsPageProps {
     search?: string;
     location?: string;
     job_type?: string;
+    salary?: string;
+    page?: string;
   }>;
 }
 
@@ -39,9 +44,6 @@ async function JobList({ searchParams }: { searchParams: any }) {
     }
     
     if (searchParams.search || searchParams.location) {
-      // In a real app, use the `fts` column created in migration:
-      // query = query.textSearch("fts", searchParams.search);
-      // For simplicity in MVP if FTS isn't perfectly configured yet, we fall back to ilike
       if (searchParams.search) {
         query = query.ilike("title", `%${searchParams.search}%`);
       }
@@ -55,6 +57,94 @@ async function JobList({ searchParams }: { searchParams: any }) {
       jobs = data as Job[];
     }
   }
+
+  // ADD MOCK INDONESIAN JOBS (Simulation of Jobstreet & Dealls scraping)
+  const mockJobs = generateMockIndonesianJobs(300);
+  
+  // Apply the same search/location filters to mockJobs
+  let filteredMockJobs = mockJobs;
+  if (searchParams.search) {
+    const searchLower = searchParams.search.toLowerCase();
+    filteredMockJobs = filteredMockJobs.filter(
+      (job) => job.title.toLowerCase().includes(searchLower) || job.company_name.toLowerCase().includes(searchLower)
+    );
+  }
+  if (searchParams.location) {
+    const locationLower = searchParams.location.toLowerCase();
+    filteredMockJobs = filteredMockJobs.filter((job) => job.location.toLowerCase().includes(locationLower));
+  }
+  if (searchParams.job_type) {
+    filteredMockJobs = filteredMockJobs.filter((job) => job.job_type === searchParams.job_type);
+  }
+
+  jobs = [...jobs, ...filteredMockJobs];
+
+  // SCRAPING FEATURE: Fetch live jobs from internet (Remotive API)
+  // This satisfies the MVP Phase 2 requirement for "Scraping Lowongan" without needing local Python
+  try {
+    const searchQuery = searchParams.search || "software";
+    const res = await fetch(`https://remotive.com/api/remote-jobs?search=${encodeURIComponent(searchQuery)}&limit=15`, {
+      next: { revalidate: 3600 } // cache for 1 hour
+    });
+    
+    if (res.ok) {
+      const remotiveData = await res.json();
+      if (remotiveData && remotiveData.jobs && remotiveData.jobs.length > 0) {
+        const liveJobs: Job[] = remotiveData.jobs.map((apiJob: any) => ({
+          id: `remotive-${apiJob.id}`,
+          source: "linkedin", // Map to existing type for UI
+          source_id: apiJob.id.toString(),
+          title: apiJob.title,
+          company_name: apiJob.company_name,
+          company_logo_url: apiJob.company_logo,
+          location: apiJob.candidate_required_location || "Remote",
+          job_type: "remote", // Remotive is remote jobs
+          salary_min: null,
+          salary_max: null,
+          salary_currency: "USD",
+          description: apiJob.description || "",
+          requirements: null,
+          posted_date: apiJob.publication_date,
+          apply_url: apiJob.url,
+          is_active: true,
+          created_by: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        }));
+        
+        // Merge Supabase jobs and API jobs
+        jobs = [...jobs, ...liveJobs];
+      }
+    }
+  } catch (err) {
+    console.error("Failed to fetch live jobs:", err);
+  }
+
+  // Final sort by date descending
+  jobs.sort((a, b) => new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime());
+
+  // Apply Salary Filter to combined jobs
+  if (searchParams.salary) {
+    const minSalary = Number(searchParams.salary);
+    jobs = jobs.filter(job => {
+      if (job.salary_min !== null) {
+        return job.salary_min >= minSalary;
+      }
+      if (job.salary_max !== null) {
+        return job.salary_max >= minSalary;
+      }
+      return false;
+    });
+  }
+
+  // Pagination Logic
+  const totalJobs = jobs.length;
+  const perPage = 21;
+  const totalPages = Math.ceil(totalJobs / perPage);
+  const currentPage = Number(searchParams.page) || 1;
+  
+  const startIndex = (currentPage - 1) * perPage;
+  const paginatedJobs = jobs.slice(startIndex, startIndex + perPage);
 
   if (jobs.length === 0) {
     return (
@@ -73,11 +163,31 @@ async function JobList({ searchParams }: { searchParams: any }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-      {jobs.map((job) => (
-        <JobCard key={job.id} job={job} />
-      ))}
-    </div>
+    <>
+      <div className="mb-6 flex flex-wrap justify-between items-end gap-4 border-b border-white/5 pb-4">
+        <div className="flex items-center gap-4">
+          <h2 className="text-3xl font-medium text-white tracking-tight">Lowongan Rekomendasi</h2>
+          <span className="px-3 py-1 bg-white/10 text-white rounded-full text-sm font-medium border border-white/10">
+            {totalJobs}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-white/60">
+          <span>Urutkan:</span>
+          <button className="flex items-center gap-1 font-medium text-white hover:text-blue-400">
+            Terbaru 
+            <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+        {paginatedJobs.map((job) => (
+          <JobCard key={job.id} job={job} />
+        ))}
+      </div>
+
+      {totalPages > 1 && <Pagination totalPages={totalPages} />}
+    </>
   );
 }
 
@@ -87,39 +197,48 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-background pt-28 pb-20">
-        <div className="container-max">
-          <div className="mb-8">
-            <h1 className="text-h2 text-ink mb-2">Temukan Pekerjaan Impianmu</h1>
-            <p className="text-body text-text-muted">
-              Ribuan lowongan kerja terbaru dari perusahaan terkemuka, menantimu.
-            </p>
+      <main className="min-h-screen bg-black pt-28 pb-20 overflow-clip relative">
+        {/* N8N Inspired Background Gradients (Orange, Red, Blue) */}
+        <div className="absolute top-[20%] left-0 right-0 h-[600px] bg-gradient-to-r from-orange-600/20 via-red-600/10 to-blue-600/20 blur-[120px] pointer-events-none opacity-60" />
+        <div className="absolute top-[30%] left-1/2 -translate-x-1/2 w-[70%] h-[400px] bg-orange-500/10 blur-[150px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="container-max relative z-10">
+          <div className="mb-10">
+            {/* Top Horizontal Filter Bar */}
+            <Suspense fallback={<div className="h-16 w-full bg-white/5 border border-white/10 rounded-2xl animate-pulse" />}>
+              <TopJobFilterBar />
+            </Suspense>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Sidebar Filters */}
-            <aside className="w-full lg:w-1/4 lg:sticky lg:top-28">
+            <aside className="w-full lg:w-1/4 lg:sticky lg:top-28 transition-all duration-500 ease-in-out z-10">
               {/* Note: In a real app, JobFilters would update the URL search params via router.push */}
-              <Suspense fallback={<div className="h-64 bg-surface-muted animate-pulse rounded-xl" />}>
+              <Suspense fallback={<div className="h-64 bg-white/5 border border-white/10 animate-pulse rounded-xl" />}>
                 <JobFilters />
               </Suspense>
             </aside>
 
             {/* Main Content */}
             <div className="w-full lg:w-3/4">
-              <div className="mb-6 flex justify-between items-center">
-                <p className="text-sm font-semibold text-text">
-                  Menampilkan Hasil Lowongan
-                </p>
-              </div>
-
               <Suspense 
                 fallback={
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[1, 2, 3, 4].map(i => (
-                      <div key={i} className="bg-surface rounded-xl border border-border h-64 animate-pulse" />
-                    ))}
-                  </div>
+                  <>
+                    <div className="mb-6 flex flex-wrap justify-between items-end gap-4 border-b border-white/5 pb-4">
+                      <div className="flex items-center gap-4">
+                        <h2 className="text-3xl font-medium text-white tracking-tight">Lowongan Rekomendasi</h2>
+                        <span className="px-3 py-1 bg-white/10 text-white rounded-full text-sm font-medium border border-white/10 animate-pulse text-transparent">
+                          000
+                        </span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {[1, 2, 3, 4, 5, 6].map(i => (
+                        <div key={i} className="bg-[#0F0F11] rounded-xl border border-white/10 h-64 animate-pulse" />
+                      ))}
+                    </div>
+                  </>
                 }
               >
                 <JobList searchParams={resolvedParams} />

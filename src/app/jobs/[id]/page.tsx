@@ -6,6 +6,7 @@ import { createServerClient } from "@/lib/supabase/server";
 import { type Job } from "@/types";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import GenerateCoverLetterButton from "@/components/jobs/GenerateCoverLetterButton";
 import { 
   MapPin, 
   Briefcase, 
@@ -275,10 +276,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
 
                 <hr className="border-border my-6" />
 
-                <button className="w-full py-2.5 px-4 bg-primary-soft text-primary font-bold rounded-md transition-colors hover:bg-primary/20 flex items-center justify-center gap-2 text-sm">
-                  <Sparkles className="w-4 h-4" />
-                  Buat AI Cover Letter
-                </button>
+                <GenerateCoverLetterButton jobId={job.id} />
               </div>
 
             </div>

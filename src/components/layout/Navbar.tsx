@@ -50,26 +50,26 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "glass py-3 shadow-subtle"
-          : "bg-transparent py-5"
-      )}
-    >
-      <nav className="container-max flex items-center justify-between gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 pt-4">
+      <nav 
+        className={cn(
+          "mx-auto flex items-center justify-between gap-4 transition-all duration-300 relative",
+          scrolled
+            ? "w-[95%] max-w-6xl bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-full py-2.5 px-6 shadow-2xl"
+            : "container-max bg-transparent py-2 px-6"
+        )}
+      >
         {/* Logo */}
         <Link
           href="/"
           className="flex items-center gap-2 shrink-0"
           id="nav-logo"
         >
-          <div className="w-9 h-9 rounded-md bg-primary flex items-center justify-center">
-            <Briefcase className="w-5 h-5 text-on-primary" />
+          <div className="w-9 h-9 rounded-md bg-blue-600 flex items-center justify-center">
+            <Briefcase className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-extrabold tracking-tight text-ink">
-            Lokers<span className="text-primary">!</span>
+          <span className="text-xl font-extrabold tracking-tight text-white">
+            Lokers<span className="text-blue-500">!</span>
           </span>
         </Link>
 
@@ -80,10 +80,10 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "px-4 py-2 rounded-md text-sm font-semibold transition-colors duration-200",
+                "px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200",
                 pathname === link.href
-                  ? "text-primary bg-primary-soft"
-                  : "text-text-muted hover:text-text hover:bg-surface-muted"
+                  ? "text-white bg-white/10"
+                  : "text-white/60 hover:text-white hover:bg-white/5"
               )}
             >
               {link.label}
@@ -92,19 +92,19 @@ export default function Navbar() {
         </div>
 
         {/* Right side actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
           {user ? (
             /* Logged in state */
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-surface-muted transition-colors"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors border border-transparent hover:border-white/10"
                 id="nav-user-menu"
               >
-                <div className="w-8 h-8 rounded-full bg-primary-soft flex items-center justify-center">
-                  <User className="w-4 h-4 text-primary" />
+                <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/30">
+                  <User className="w-4 h-4 text-blue-400" />
                 </div>
-                <ChevronDown className="w-4 h-4 text-text-muted" />
+                <ChevronDown className="w-4 h-4 text-white/60" />
               </button>
 
               <AnimatePresence>
@@ -114,39 +114,39 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.96 }}
                     transition={{ duration: 0.18 }}
-                    className="absolute right-0 top-full mt-2 w-56 bg-surface border border-border rounded-lg shadow-floating py-2"
+                    className="absolute right-0 top-full mt-2 w-56 bg-[#141416]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2"
                   >
                     <Link
                       href="/dashboard"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-surface-muted transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                     >
-                      <Briefcase className="w-4 h-4 text-text-muted" />
+                      <Briefcase className="w-4 h-4" />
                       Dashboard
                     </Link>
                     <Link
                       href="/dashboard/cvs"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-surface-muted transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                     >
-                      <FileText className="w-4 h-4 text-text-muted" />
+                      <FileText className="w-4 h-4" />
                       CV Saya
                     </Link>
                     <Link
                       href="/dashboard/bookmarks"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-surface-muted transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                     >
-                      <Bookmark className="w-4 h-4 text-text-muted" />
+                      <Bookmark className="w-4 h-4" />
                       Tersimpan
                     </Link>
                     <Link
                       href="/dashboard/settings"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-surface-muted transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                     >
-                      <Settings className="w-4 h-4 text-text-muted" />
+                      <Settings className="w-4 h-4" />
                       Pengaturan
                     </Link>
-                    <hr className="my-2 border-border" />
+                    <div className="my-2 h-px bg-white/10" />
                     <button
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-surface-muted transition-colors w-full text-left text-error"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors w-full text-left"
                       id="nav-logout"
                     >
                       <LogOut className="w-4 h-4" />
@@ -163,7 +163,7 @@ export default function Navbar() {
               <div className="relative mr-2">
                 <button
                   onClick={() => setLangMenuOpen(!langMenuOpen)}
-                  className="flex items-center gap-1.5 px-2 py-2 rounded hover:bg-surface-muted transition-colors text-text-muted hover:text-text font-semibold text-sm"
+                  className="flex items-center gap-1.5 px-2 py-2 rounded-full hover:bg-white/5 transition-colors text-white/60 hover:text-white font-medium text-sm"
                 >
                   <Globe className="w-4 h-4" />
                   {language}
@@ -177,13 +177,13 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.96 }}
                       transition={{ duration: 0.18 }}
-                      className="absolute right-0 top-full mt-2 w-32 bg-[#111] border border-border rounded-md shadow-floating py-2 z-50"
+                      className="absolute right-0 top-full mt-2 w-32 bg-[#141416]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl py-2 z-50"
                     >
                       <button
                         onClick={() => { setLanguage("IDN"); setLangMenuOpen(false); }}
                         className={cn(
                           "flex items-center w-full px-4 py-2 text-sm transition-colors",
-                          language === "IDN" ? "text-primary font-bold bg-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"
+                          language === "IDN" ? "text-blue-400 font-bold bg-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"
                         )}
                       >
                         IDN - Indonesia
@@ -192,7 +192,7 @@ export default function Navbar() {
                         onClick={() => { setLanguage("EN"); setLangMenuOpen(false); }}
                         className={cn(
                           "flex items-center w-full px-4 py-2 text-sm transition-colors",
-                          language === "EN" ? "text-primary font-bold bg-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"
+                          language === "EN" ? "text-blue-400 font-bold bg-white/5" : "text-white/70 hover:bg-white/5 hover:text-white"
                         )}
                       >
                         EN - English
@@ -204,17 +204,16 @@ export default function Navbar() {
 
               <Link
                 href="/login"
-                className="px-4 py-2.5 text-sm font-semibold text-text hover:text-white border border-white/10 hover:border-white/50 hover:bg-white/3 rounded transition-colors"
+                className="px-5 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors"
                 id="nav-login"
               >
                 Masuk
               </Link>
               <Link
                 href="/register"
-                className="px-5 py-2.5 text-sm font-bold bg-primary text-on-primary rounded hover:bg-primary-hover transition-colors shadow-subtle flex items-center gap-2"
+                className="px-5 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-500 text-white rounded-full transition-colors shadow-lg shadow-blue-500/20 border border-blue-500/50"
                 id="nav-register"
               >
-                <Sparkles className="w-4 h-4" />
                 Mulai Gratis
               </Link>
             </>
@@ -223,15 +222,15 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 rounded-md hover:bg-surface-muted transition-colors"
+          className="md:hidden p-2 rounded-full hover:bg-white/10 transition-colors border border-transparent hover:border-white/10"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
           id="nav-mobile-toggle"
         >
           {mobileOpen ? (
-            <X className="w-6 h-6 text-text" />
+            <X className="w-5 h-5 text-white" />
           ) : (
-            <Menu className="w-6 h-6 text-text" />
+            <Menu className="w-5 h-5 text-white" />
           )}
         </button>
       </nav>
@@ -240,39 +239,39 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.24 }}
-            className="md:hidden overflow-hidden border-t border-border"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl md:hidden overflow-hidden rounded-2xl bg-[#111]/90 backdrop-blur-xl border border-white/10 shadow-2xl z-40"
           >
-            <div className="glass px-5 py-4 space-y-1">
+            <div className="px-5 py-4 space-y-2">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "block px-4 py-3 rounded-md text-sm font-semibold transition-colors",
+                    "block px-4 py-3 rounded-xl text-sm font-medium transition-colors",
                     pathname === link.href
-                      ? "text-primary bg-primary-soft"
-                      : "text-text-muted hover:text-text hover:bg-surface-muted"
+                      ? "text-white bg-white/10"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
                   )}
                 >
                   {link.label}
                 </Link>
               ))}
 
-              <hr className="my-3 border-border" />
+              <div className="my-3 h-px bg-white/10" />
 
               {user ? (
                 <>
                   <Link
                     href="/dashboard"
-                    className="block px-4 py-3 rounded-md text-sm font-semibold text-text-muted hover:text-text hover:bg-surface-muted"
+                    className="block px-4 py-3 rounded-xl text-sm font-medium text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                   >
                     Dashboard
                   </Link>
-                  <button className="block w-full text-left px-4 py-3 rounded-md text-sm font-semibold text-error hover:bg-surface-muted">
+                  <button className="block w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors">
                     Keluar
                   </button>
                 </>
@@ -280,13 +279,13 @@ export default function Navbar() {
                 <div className="flex flex-col gap-2 pt-2">
                   <Link
                     href="/login"
-                    className="block text-center px-4 py-3 rounded-md text-sm font-semibold border border-border text-text hover:bg-surface-muted transition-colors"
+                    className="block text-center px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/5 transition-colors"
                   >
                     Masuk
                   </Link>
                   <Link
                     href="/register"
-                    className="block text-center px-4 py-3 rounded-md text-sm font-bold bg-primary text-on-primary hover:bg-primary-hover transition-colors"
+                    className="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-blue-600 text-white hover:bg-blue-500 transition-colors border border-blue-500/50"
                   >
                     Mulai Gratis
                   </Link>

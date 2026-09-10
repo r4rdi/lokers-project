@@ -15,6 +15,9 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
     fullName: initialData?.fullName || "",
     email: initialData?.email || "",
     phone: initialData?.phone || "",
+    location: initialData?.location || "",
+    linkedin: initialData?.linkedin || "",
+    github: initialData?.github || "",
     summary: initialData?.summary || "",
     experience: initialData?.experience || [],
     education: initialData?.education || [],
@@ -94,6 +97,33 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
               type="text" 
               value={formData.phone}
               onChange={(e) => handleChange("phone", e.target.value)}
+              className="w-full px-4 py-2.5 rounded-md border border-border bg-surface-muted text-sm focus:border-primary outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-label text-text mb-2">Lokasi Tempat Tinggal</label>
+            <input 
+              type="text" 
+              value={formData.location}
+              onChange={(e) => handleChange("location", e.target.value)}
+              className="w-full px-4 py-2.5 rounded-md border border-border bg-surface-muted text-sm focus:border-primary outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-label text-text mb-2">LinkedIn URL</label>
+            <input 
+              type="text" 
+              value={formData.linkedin}
+              onChange={(e) => handleChange("linkedin", e.target.value)}
+              className="w-full px-4 py-2.5 rounded-md border border-border bg-surface-muted text-sm focus:border-primary outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-label text-text mb-2">GitHub URL (Opsional)</label>
+            <input 
+              type="text" 
+              value={formData.github}
+              onChange={(e) => handleChange("github", e.target.value)}
               className="w-full px-4 py-2.5 rounded-md border border-border bg-surface-muted text-sm focus:border-primary outline-none"
             />
           </div>

@@ -88,7 +88,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} Lokers.biz.id. Hak cipta dilindungi.
+            © 2026 Lokers!. All Rights Reserved.
           </p>
         </div>
       </div>

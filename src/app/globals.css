@@ -229,8 +229,44 @@ body {
 /* --- Focus Styles --- */
 *:focus-visible {
   outline: none;
-  box-shadow: var(--shadow-glow);
-  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
+}
+
+/* Ensure inputs don't get excessive rounding unless specified */
+input:not([type="checkbox"]):not([type="radio"]), textarea {
+  border-radius: var(--radius-xs);
+}
+
+/* --- Cursor Styles for Interactive Elements --- */
+button, 
+a, 
+select, 
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"], 
+input[type="checkbox"], 
+input[type="radio"], 
+input[type="range"], 
+[role="button"],
+[role="switch"],
+label {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="url"], 
+textarea {
+  cursor: text;
 }
 
 /* --- Selection --- */
@@ -289,4 +325,18 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* --- Animations --- */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marquee 40s linear infinite reverse;
 }

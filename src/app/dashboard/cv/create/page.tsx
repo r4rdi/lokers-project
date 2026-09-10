@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import CVForm from "@/components/cv/CVForm";
 import PDFUploader from "@/components/cv/PDFUploader";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Download } from "lucide-react";
 
 export default function CreateCVPage() {
   const router = useRouter();
@@ -56,11 +56,21 @@ export default function CreateCVPage() {
         Kembali ke kelola CV
       </Link>
 
-      <div>
-        <h1 className="text-h2 text-ink mb-2">Buat CV Baru</h1>
-        <p className="text-body text-text-muted">
-          Upload CV PDF lama Anda untuk diurai oleh AI, atau isi form secara manual.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-h2 text-ink mb-2">Buat CV Baru</h1>
+          <p className="text-body text-text-muted">
+            Upload CV PDF lama Anda untuk diurai oleh AI, atau isi form secara manual.
+          </p>
+        </div>
+        <a 
+          href="/Contoh-Resume-Acuan-ATS.pdf"
+          download="Contoh-Resume-Acuan-ATS.pdf"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-surface border border-border text-text hover:text-primary hover:border-primary/50 font-semibold rounded-md transition-colors text-sm shadow-sm whitespace-nowrap"
+        >
+          <Download className="w-4 h-4" />
+          Unduh Contoh PDF Referensi
+        </a>
       </div>
 
       {!parsedData ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Search, ChevronDown, MapPin, Briefcase, Filter } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -40,18 +41,19 @@ const LOKASI_MOCK = [
 ];
 
 export default function JobFilterBar() {
+  const router = useRouter();
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  
+
   // Selected States
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLevel, setSelectedLevel] = useState<string>("");
   const [selectedJenis, setSelectedJenis] = useState<string>("");
   const [selectedTipe, setSelectedTipe] = useState<string>("");
-  
+
   // Location specific
   const [locationSearch, setLocationSearch] = useState("");
   const [selectedLokasi, setSelectedLokasi] = useState<string>("");
-  
+
   // Salary specific
   const [salary, setSalary] = useState<number>(5000000);
 
@@ -80,7 +82,26 @@ export default function JobFilterBar() {
     }).format(number);
   };
 
-  const filteredLocations = LOKASI_MOCK.filter(loc => 
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("search", searchQuery);
+    if (selectedLokasi) params.set("location", selectedLokasi);
+    if (selectedJenis) params.set("job_type", selectedJenis);
+    
+    // Additional parameters if needed by the JobsPage later
+    if (selectedLevel) params.set("level", selectedLevel);
+    if (selectedTipe) params.set("work_type", selectedTipe);
+    
+    router.push(`/jobs?${params.toString()}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const filteredLocations = LOKASI_MOCK.filter(loc =>
     loc.toLowerCase().includes(locationSearch.toLowerCase())
   );
 
@@ -94,12 +115,14 @@ export default function JobFilterBar() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Cari berdasarkan posisi, perusahaan, & skill"
             className="w-full bg-transparent text-white placeholder:text-white/40 text-sm outline-none"
           />
         </div>
         <button
           type="button"
+          onClick={handleSearch}
           className="px-8 py-3 bg-primary hover:bg-primary-hover text-white font-bold text-sm rounded-md transition-colors flex items-center justify-center gap-2 shrink-0"
         >
           <Search className="w-4 h-4" />
@@ -121,7 +144,7 @@ export default function JobFilterBar() {
             {selectedLevel || "Level"}
             <ChevronDown className={cn("w-4 h-4 transition-transform", activeDropdown === "level" && "rotate-180")} />
           </button>
-          
+
           <AnimatePresence>
             {activeDropdown === "level" && (
               <motion.div
@@ -162,7 +185,7 @@ export default function JobFilterBar() {
             {selectedJenis || "Jenis"}
             <ChevronDown className={cn("w-4 h-4 transition-transform", activeDropdown === "jenis" && "rotate-180")} />
           </button>
-          
+
           <AnimatePresence>
             {activeDropdown === "jenis" && (
               <motion.div
@@ -201,7 +224,7 @@ export default function JobFilterBar() {
             {selectedTipe || "Tipe"}
             <ChevronDown className={cn("w-4 h-4 transition-transform", activeDropdown === "tipe" && "rotate-180")} />
           </button>
-          
+
           <AnimatePresence>
             {activeDropdown === "tipe" && (
               <motion.div
@@ -210,7 +233,7 @@ export default function JobFilterBar() {
                 exit={{ opacity: 0, y: 10 }}
                 className="absolute top-full left-0 mt-2 w-40 bg-[#111] border border-border rounded-lg shadow-floating z-50 py-2"
               >
-                 <div className="px-3 pb-2 mb-2 border-b border-white/10 text-xs font-semibold text-white/50 uppercase tracking-wider">Tipe Kerja</div>
+                <div className="px-3 pb-2 mb-2 border-b border-white/10 text-xs font-semibold text-white/50 uppercase tracking-wider">Tipe Kerja</div>
                 {TIPE.map(tipe => (
                   <button
                     key={tipe}
@@ -240,7 +263,7 @@ export default function JobFilterBar() {
             {selectedLokasi || "Lokasi"}
             <ChevronDown className={cn("w-4 h-4 transition-transform", activeDropdown === "lokasi" && "rotate-180")} />
           </button>
-          
+
           <AnimatePresence>
             {activeDropdown === "lokasi" && (
               <motion.div
@@ -252,9 +275,9 @@ export default function JobFilterBar() {
                 <div className="px-3 pb-3">
                   <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-md px-3 py-2">
                     <Search className="w-4 h-4 text-white/40" />
-                    <input 
-                      type="text" 
-                      placeholder="Cari lokasi" 
+                    <input
+                      type="text"
+                      placeholder="Cari lokasi"
                       className="bg-transparent text-sm text-white outline-none w-full"
                       value={locationSearch}
                       onChange={(e) => setLocationSearch(e.target.value)}
@@ -295,7 +318,7 @@ export default function JobFilterBar() {
             Gaji {salary > 1000000 ? `(Min ${formatRupiah(salary).replace(',00', '')})` : ""}
             <ChevronDown className={cn("w-4 h-4 transition-transform", activeDropdown === "gaji" && "rotate-180")} />
           </button>
-          
+
           <AnimatePresence>
             {activeDropdown === "gaji" && (
               <motion.div
@@ -305,11 +328,11 @@ export default function JobFilterBar() {
                 className="absolute top-full left-0 mt-2 w-80 bg-[#111] border border-border rounded-lg shadow-floating z-50 p-5"
               >
                 <div className="text-sm font-semibold text-white/80 mb-6">Minimal Gaji yang Diharapkan</div>
-                
+
                 <div className="mb-4 text-center">
                   <span className="text-xl font-bold text-white">{formatRupiah(salary).replace(',00', '')}</span>
                 </div>
-                
+
                 <input
                   type="range"
                   min="1000000"
@@ -319,19 +342,19 @@ export default function JobFilterBar() {
                   onChange={(e) => setSalary(Number(e.target.value))}
                   className="w-full h-2 bg-white/10 rounded-md appearance-none cursor-pointer accent-primary"
                 />
-                
+
                 <div className="flex justify-between text-xs text-white/40 mt-2">
                   <span>Rp 1 Jt</span>
                   <span>Rp 50 Jt+</span>
                 </div>
 
                 <div className="mt-6 flex justify-end">
-                   <button 
+                  <button
                     onClick={() => setActiveDropdown(null)}
                     className="px-4 py-2 text-sm bg-primary text-white rounded-md font-semibold hover:bg-primary-hover"
-                   >
-                     Terapkan
-                   </button>
+                  >
+                    Terapkan
+                  </button>
                 </div>
               </motion.div>
             )}
@@ -340,7 +363,7 @@ export default function JobFilterBar() {
 
         {/* Clear Filters (if any selected) */}
         {(selectedLevel || selectedJenis || selectedTipe || selectedLokasi || salary > 1000000) && (
-          <button 
+          <button
             onClick={() => {
               setSelectedLevel("");
               setSelectedJenis("");

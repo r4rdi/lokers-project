@@ -59,31 +59,28 @@ export default function PDFUploader({ onUploadSuccess }: PDFUploaderProps) {
     setIsUploading(true);
     setError(null);
 
-    // In MVP, we would normally send to an API Route: 
-    // const formData = new FormData();
-    // formData.append("file", file);
-    // const res = await fetch("/api/parse-cv", { method: "POST", body: formData });
-    
-    // Simulate AI parsing delay
-    setTimeout(() => {
-      setIsUploading(false);
-      // Mock parsed data
-      onUploadSuccess({
-        fullName: "Budi Santoso",
-        email: "budi.santoso@example.com",
-        phone: "+62 812 3456 7890",
-        summary: "Software Engineer berpengalaman dengan fokus pada pengembangan web modern.",
-        experience: [
-          {
-            title: "Senior Frontend Engineer",
-            company: "Tech Corp",
-            startDate: "2020-01",
-            endDate: "Present",
-            description: "Memimpin tim frontend untuk aplikasi SaaS utama."
-          }
-        ]
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/cvs/parse-pdf", {
+        method: "POST",
+        body: formData,
       });
-    }, 2500);
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        throw new Error(json.message || json.error || "Gagal membaca file PDF.");
+      }
+
+      onUploadSuccess(json.data);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Terjadi kesalahan saat menghubungi server.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const resetSelection = () => {
