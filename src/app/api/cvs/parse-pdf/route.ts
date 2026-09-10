@@ -83,7 +83,7 @@ Kembalikan HANYA JSON murni yang sesuai dengan struktur berikut, tanpa tag markd
         model: 'gemini-3.6-flash',
         contents: prompt
     });
-    let jsonText = response.text.trim();
+    let jsonText = (response.text || "").trim();
     
     // Clean up potential markdown blocks if Gemini still outputs them
     if (jsonText.startsWith('```json')) {
