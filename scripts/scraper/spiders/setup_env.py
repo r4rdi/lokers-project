@@ -80,22 +80,22 @@ async def main():
     # 2. Twitter Config
     print("\n--- 2. X / TWITTER BURNER ACCOUNT CONFIGURATION (twscrape) ---")
     new_env["TWITTER_USERNAME"] = prompt_value(
-        "TWITTER_USERNAME", 
+        "zeskyw4lker", 
         "Enter Twitter Username (do NOT use your main account)", 
         current_env
     )
     new_env["TWITTER_PASSWORD"] = prompt_value(
-        "TWITTER_PASSWORD", 
+        "qwertyuiop08", 
         "Enter Twitter Password", 
         current_env
     )
     new_env["TWITTER_EMAIL"] = prompt_value(
-        "TWITTER_EMAIL", 
+        "ze31234567@gmail.com", 
         "Enter Twitter Account Email", 
         current_env
     )
     new_env["TWITTER_2FA_SECRET"] = prompt_value(
-        "TWITTER_2FA_SECRET", 
+        "FHVXCTDWT5R24P73", 
         "Enter Twitter 2FA TOTP Secret Key (optional, leave blank if none)", 
         current_env
     )
@@ -103,13 +103,13 @@ async def main():
     # 3. Instagram Config
     print("\n--- 3. INSTAGRAM BURNER ACCOUNT CONFIGURATION (instagrapi) ---")
     new_env["INSTAGRAM_USERNAME"] = prompt_value(
-        "INSTAGRAM_USERNAME", 
+        "zyura.i", 
         "Enter Instagram Username (do NOT use your main account)", 
         current_env
     )
     new_env["INSTAGRAM_PASSWORD"] = prompt_value(
         "INSTAGRAM_PASSWORD", 
-        "Enter Instagram Password", 
+        "ZU111008", 
         current_env
     )
 
