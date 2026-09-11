@@ -37,10 +37,16 @@ export async function ingestJobs(source: string, rawJobs: RawJobRecord[]): Promi
     const normalizedJobs = rawJobs.map(normalizeJob);
     
     // 2. We will insert row by row or in chunks to avoid single-row failures rejecting the whole batch
+    const allowedSources = ['linkedin', 'indeed', 'glints', 'jobstreet', 'manual', 'employer'];
+    
     for (const job of normalizedJobs) {
+      // Map unsupported sources to 'manual' to bypass Supabase job_source ENUM constraints
+      const dbSource = allowedSources.includes(job.source) ? job.source : 'manual';
+      const jobToInsert = { ...job, source: dbSource };
+      
       const { error } = await supabase
         .from("jobs")
-        .upsert(job, { 
+        .upsert(jobToInsert, { 
           onConflict: "source,source_id", 
           ignoreDuplicates: true // We skip updating existing jobs to avoid overwriting manual admin edits
         });
