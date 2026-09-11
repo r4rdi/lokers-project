@@ -55,12 +55,23 @@ export function generateMockIndonesianJobs(count: number = 300): Job[] {
     const jobTypes: JobType[] = ["full-time", "contract", "remote", "part-time"];
     
     const source = randomItem(SOURCES);
+    const jobTitle = randomItem(JOB_TITLES);
+    
+    // Generate a realistic, clickable search link based on the source platform
+    let applyUrl = "https://example.com/apply";
+    if (source === "linkedin") {
+      applyUrl = `https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(company + " " + jobTitle)}`;
+    } else if (source === "jobstreet") {
+      applyUrl = `https://www.jobstreet.co.id/id/job-search/${encodeURIComponent(jobTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}-jobs/`;
+    } else if (source === "glints") {
+      applyUrl = `https://glints.com/id/opportunities/jobs/explore?keyword=${encodeURIComponent(jobTitle)}`;
+    }
 
     mockJobs.push({
       id: `mock-${source}-${i}`,
       source: source,
       source_id: `ext-${i}`,
-      title: randomItem(JOB_TITLES),
+      title: jobTitle,
       company_name: company,
       company_logo_url: logoUrl,
       location: randomItem(LOCATIONS),
@@ -71,7 +82,7 @@ export function generateMockIndonesianJobs(count: number = 300): Job[] {
       description: `Dicari kandidat berpengalaman untuk posisi ini di ${company}. Anda akan bertanggung jawab untuk pengembangan dan inovasi produk.`,
       requirements: "Pengalaman minimal 2 tahun. Mampu bekerja sama dalam tim.",
       posted_date: postedDate.toISOString(),
-      apply_url: "https://example.com/apply",
+      apply_url: applyUrl,
       is_active: true,
       created_by: null,
       created_at: new Date().toISOString(),

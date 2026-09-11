@@ -8,7 +8,6 @@ import JobFilters from "@/components/jobs/JobFilters";
 import TopJobFilterBar from "@/components/jobs/TopJobFilterBar";
 import Pagination from "@/components/ui/Pagination";
 import { Briefcase } from "lucide-react";
-import { generateMockIndonesianJobs } from "@/lib/mockScraper";
 
 // The search params available to this page
 interface JobsPageProps {
@@ -29,7 +28,12 @@ async function JobList({ searchParams }: { searchParams: any }) {
   let jobs: Job[] = [];
   
   if (!isMockEnv) {
-    const supabase = await createServerClient();
+    // Use service role to bypass RLS recursion bug on public job listing
+    const { createClient } = await import("@supabase/supabase-js");
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
     
     // Build query
     let query = supabase
@@ -58,72 +62,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
     }
   }
 
-  // ADD MOCK INDONESIAN JOBS (Simulation of Jobstreet & Dealls scraping)
-  const mockJobs = generateMockIndonesianJobs(300);
-  
-  // Apply the same search/location filters to mockJobs
-  let filteredMockJobs = mockJobs;
-  if (searchParams.search) {
-    const searchLower = searchParams.search.toLowerCase();
-    filteredMockJobs = filteredMockJobs.filter(
-      (job) => job.title.toLowerCase().includes(searchLower) || job.company_name.toLowerCase().includes(searchLower)
-    );
-  }
-  if (searchParams.location) {
-    const locationLower = searchParams.location.toLowerCase();
-    filteredMockJobs = filteredMockJobs.filter((job) => job.location.toLowerCase().includes(locationLower));
-  }
-  if (searchParams.job_type) {
-    filteredMockJobs = filteredMockJobs.filter((job) => job.job_type === searchParams.job_type);
-  }
-
-  jobs = [...jobs, ...filteredMockJobs];
-
-  // SCRAPING FEATURE: Fetch live jobs from internet (Remotive API)
-  // This satisfies the MVP Phase 2 requirement for "Scraping Lowongan" without needing local Python
-  try {
-    const searchQuery = searchParams.search || "software";
-    const res = await fetch(`https://remotive.com/api/remote-jobs?search=${encodeURIComponent(searchQuery)}&limit=15`, {
-      next: { revalidate: 3600 } // cache for 1 hour
-    });
-    
-    if (res.ok) {
-      const remotiveData = await res.json();
-      if (remotiveData && remotiveData.jobs && remotiveData.jobs.length > 0) {
-        const liveJobs: Job[] = remotiveData.jobs.map((apiJob: any) => ({
-          id: `remotive-${apiJob.id}`,
-          source: "linkedin", // Map to existing type for UI
-          source_id: apiJob.id.toString(),
-          title: apiJob.title,
-          company_name: apiJob.company_name,
-          company_logo_url: apiJob.company_logo,
-          location: apiJob.candidate_required_location || "Remote",
-          job_type: "remote", // Remotive is remote jobs
-          salary_min: null,
-          salary_max: null,
-          salary_currency: "USD",
-          description: apiJob.description || "",
-          requirements: null,
-          posted_date: apiJob.publication_date,
-          apply_url: apiJob.url,
-          is_active: true,
-          created_by: null,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        }));
-        
-        // Merge Supabase jobs and API jobs
-        jobs = [...jobs, ...liveJobs];
-      }
-    }
-  } catch (err) {
-    console.error("Failed to fetch live jobs:", err);
-  }
-
-  // Final sort by date descending
-  jobs.sort((a, b) => new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime());
-
-  // Apply Salary Filter to combined jobs
+  // Apply Salary Filter
   if (searchParams.salary) {
     const minSalary = Number(searchParams.salary);
     jobs = jobs.filter(job => {
@@ -156,7 +95,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
         <p className="text-body text-text-muted max-w-md">
           {isMockEnv 
             ? "Database Supabase belum terhubung. Konfigurasi .env.local terlebih dahulu."
-            : "Maaf, kami tidak dapat menemukan lowongan yang sesuai dengan filter Anda. Silakan coba kata kunci lain."}
+            : "Maaf, kami tidak dapat menemukan lowongan yang sesuai dengan filter Anda. Silakan coba kata kunci lain atau jalankan API /api/jobs/sync untuk menarik data."}
         </p>
       </div>
     );

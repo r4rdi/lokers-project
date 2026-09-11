@@ -92,7 +92,7 @@ export default function IntegrationMarquee() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-h2 text-white mb-6"
+          className="text-h2 text-white mb-6 italic"
         >
           Terkoneksi dengan <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">100+ Platform & Perusahaan</span>
         </motion.h2>

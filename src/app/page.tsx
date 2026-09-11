@@ -41,7 +41,7 @@ function HeroSection() {
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[120px]" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-[150px]" />
 
-      <div className="container-max relative z-10 pt-16 pb-20 md:pt-24 md:pb-28">
+      <div className="container-max relative z-10 pt-4 pb-20 md:pt-18 md:pb-28">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -88,11 +88,11 @@ function HeroSection() {
               {/* LinkedIn */}
               <div className="flex items-center gap-2 text-white hover:text-white/80 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-white">
-                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                 </svg>
                 <span className="font-bold text-xl md:text-2xl tracking-tight">LinkedIn</span>
               </div>
-              
+
               {/* JobStreet */}
               <div className="flex items-center text-white hover:text-white/80 transition-colors">
                 <span className="font-extrabold text-xl md:text-2xl tracking-tighter">JobStreet</span>
@@ -197,7 +197,7 @@ function FeaturesSection() {
           >
             Fitur Utama
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-h2 text-ink mb-4">
+          <motion.h2 variants={fadeUp} className="text-h2 text-ink mb-4 italic">
             Kenapa Lokers?
           </motion.h2>
           <motion.p
@@ -244,52 +244,52 @@ function FeaturesSection() {
 const STEPS = [
   {
     step: "01",
-    title: "Upload CV",
+    title: "UPLOAD",
     description:
-      "Upload CV dalam format PDF. AI akan mengekstrak data secara otomatis.",
+      "Upload CV PDF. AI ekstrak data otomatis.",
     icon: FileText,
   },
   {
     step: "02",
-    title: "Temukan Lowongan",
+    title: "TEMUKAN",
     description:
-      "Cari dan filter ribuan lowongan kerja dari berbagai sumber terpercaya.",
+      "Filter ribuan lowongan dari sumber terpercaya.",
     icon: Search,
   },
   {
     step: "03",
-    title: "Generate Lamaran",
+    title: "GENERATE",
     description:
-      "Klik satu tombol, AI buatkan surat lamaran yang dipersonalisasi.",
+      "Klik satu tombol, AI buatkan surat personal.",
     icon: Sparkles,
   },
   {
     step: "04",
-    title: "Download & Kirim",
+    title: "KIRIM",
     description:
-      "Download dalam format PDF/DOCX dan langsung kirim ke perusahaan.",
+      "Download format PDF/DOCX & langsung kirim.",
     icon: ArrowRight,
   },
 ];
 
 function HowItWorksSection() {
   return (
-    <section className="py-20 md:py-28 relative">
+    <section className="py-20 md:py-32 relative">
       <div className="container-content">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={stagger}
-          className="text-center mb-16"
+          className="text-center mb-16 md:mb-10"
         >
           <motion.p
             variants={fadeUp}
-            className="text-label text-secondary mb-3 uppercase tracking-wider"
+            className="text-label text-warning mb-3 uppercase tracking-wider"
           >
             Cara Kerja
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-h2 text-ink mb-4">
+          <motion.h2 variants={fadeUp} className="text-h2 text-ink mb-4 italic">
             Semudah 4 Langkah
           </motion.h2>
           <motion.p
@@ -306,26 +306,51 @@ function HowItWorksSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={stagger}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="flex flex-col md:flex-row items-center md:items-start justify-center pt-8 md:pt-12 pb-16 md:pb-32"
         >
-          {STEPS.map((step) => (
-            <motion.div
-              key={step.step}
-              variants={fadeUp}
-              className="relative p-6 bg-surface rounded-lg border border-border text-center"
-            >
-              <span className="text-5xl font-extrabold text-border/60 absolute top-4 right-4">
-                {step.step}
-              </span>
-              <div className="w-14 h-14 rounded-md bg-primary-soft flex items-center justify-center mx-auto mb-5">
-                <step.icon className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="text-lg font-bold text-ink mb-2">{step.title}</h3>
-              <p className="text-sm text-text-muted leading-relaxed">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
+          {STEPS.map((step, index) => {
+            const isEven = index % 2 === 0;
+            return (
+              <motion.div
+                key={step.step}
+                variants={fadeUp}
+                className={cn(
+                  "relative w-56 h-56 lg:w-64 lg:h-64 bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] flex items-center justify-center transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] hover:bg-white/10 cursor-pointer",
+                  "rotate-45",
+                  index !== 0 ? "md:-ml-16 lg:-ml-[75px]" : "",
+                  isEven ? "z-10" : "z-20 md:mt-40 lg:mt-[181px]",
+                  "mb-12 md:mb-0"
+                )}
+              >
+                {/* Yellow corner accent */}
+                {index !== 0 && (
+                  <div className="hidden md:block absolute top-0 left-0 w-8 h-8 border-t-[3px] border-l-[3px] border-warning rounded-tl-[2.5rem] -translate-x-[1px] -translate-y-[1px] z-30" />
+                )}
+
+                {/* Unrotate content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center -rotate-45 p-6 lg:p-8">
+                  {/* Icon */}
+                  <div className="mb-3 lg:mb-4">
+                    <step.icon className="w-6 h-6 lg:w-8 lg:h-8 text-ink" strokeWidth={1.5} />
+                  </div>
+                  {/* Content */}
+                  <div className="flex items-center justify-center gap-2 lg:gap-3 w-full">
+                    <span className="text-5xl lg:text-6xl font-black text-warning">
+                      {index + 1}
+                    </span>
+                    <div className="text-left flex-1">
+                      <h3 className="text-[11px] lg:text-sm font-bold text-ink uppercase tracking-widest mb-1">
+                        {step.title}
+                      </h3>
+                      <p className="text-[9px] lg:text-[11px] text-text-muted leading-tight">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>
@@ -400,7 +425,7 @@ function PricingSection() {
           >
             Harga
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-h2 text-ink mb-4">
+          <motion.h2 variants={fadeUp} className="text-h2 text-ink mb-4 italic">
             Pilih Paket yang Tepat
           </motion.h2>
           <motion.p
@@ -496,7 +521,7 @@ function CTASection() {
           variants={stagger}
           className="max-w-2xl mx-auto"
         >
-          <motion.h2 variants={fadeUp} className="text-h1 text-white mb-6">
+          <motion.h2 variants={fadeUp} className="text-h1 text-white mb-6 italic">
             Siap Buat Lamaran Kerja yang Bikin Dilirik?
           </motion.h2>
           <motion.p

@@ -61,9 +61,16 @@ export default function JobCard({ job, featured = false }: JobCardProps) {
               rel="noreferrer"
               className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:text-blue-300 hover:bg-blue-500/20 rounded-full text-[11px] font-medium transition-colors flex items-center gap-1.5 group/link"
             >
-              <Globe className="w-3 h-3" />
               <span className="capitalize">
-                Sumber: {job.id.startsWith("remotive") ? "Remotive" : job.source}
+                Sumber: {
+                  job.source_id?.startsWith("dealls") ? "Dealls" :
+                  job.source_id?.startsWith("glints") ? "Glints" :
+                  job.source_id?.startsWith("jobstreet") || job.source_id?.startsWith("js-") ? "Jobstreet" :
+                  job.source_id?.startsWith("remotive") ? "Remotive" :
+                  job.source_id?.startsWith("jobicy") ? "Jobicy" :
+                  job.source_id?.startsWith("linkedin") ? "LinkedIn" :
+                  job.source
+                }
               </span>
               <ExternalLink className="w-2.5 h-2.5 opacity-50 group-hover/link:opacity-100" />
             </a>
