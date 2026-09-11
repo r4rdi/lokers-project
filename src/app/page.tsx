@@ -41,7 +41,7 @@ function HeroSection() {
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[120px]" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-[150px]" />
 
-      <div className="container-max relative z-10 pt-32 pb-20 md:pt-40 md:pb-28">
+      <div className="container-max relative z-10 pt-16 pb-20 md:pt-24 md:pb-28">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -69,7 +69,7 @@ function HeroSection() {
           {/* Subheading */}
           <motion.p
             variants={fadeUp}
-            className="text-lg md:text-xl text-white/60 mb-10 max-w-2xl mx-auto leading-relaxed"
+            className="text-sm md:text-base text-white/60 mb-10 max-w-2xl mx-auto leading-relaxed"
           >
             Upload CV sekali, AI buatkan surat lamaran profesional yang
             disesuaikan untuk setiap posisi. Hemat waktu hingga 80%.
@@ -79,21 +79,62 @@ function HeroSection() {
             <JobFilterBar />
           </motion.div>
 
+          {/* As seen on */}
+          <motion.div variants={fadeUp} className="mt-20 text-center">
+            <p className="text-base text-white/50 mb-10 font-medium tracking-wider">
+              AS SEEN ON
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+              {/* LinkedIn */}
+              <div className="flex items-center gap-2 text-white hover:text-white/80 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <span className="font-bold text-xl md:text-2xl tracking-tight">LinkedIn</span>
+              </div>
+              
+              {/* JobStreet */}
+              <div className="flex items-center text-white hover:text-white/80 transition-colors">
+                <span className="font-extrabold text-xl md:text-2xl tracking-tighter">JobStreet</span>
+              </div>
+
+              {/* Dealls */}
+              <div className="flex items-center text-white hover:text-white/80 transition-colors">
+                <span className="font-bold text-xl md:text-2xl tracking-tight italic">Dealls</span>
+              </div>
+
+              {/* Glints */}
+              <div className="flex items-center text-white hover:text-white/80 transition-colors">
+                <span className="font-black text-xl md:text-2xl tracking-widest uppercase">GLINTS</span>
+              </div>
+
+              {/* Remotive */}
+              <div className="flex items-center text-white hover:text-white/80 transition-colors">
+                <span className="font-bold text-xl md:text-2xl tracking-tighter font-serif lowercase">remotive</span>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Stats */}
           <motion.div
             variants={fadeUp}
-            className="flex flex-wrap justify-center gap-8 mt-12"
+            className="flex flex-wrap justify-center items-center mt-16 pb-8"
           >
             {[
               { value: "10K+", label: "Lowongan Aktif" },
               { value: "50K+", label: "Pengguna" },
               { value: "100K+", label: "Lamaran Dibuat" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-2xl md:text-3xl font-extrabold text-white">
-                  {stat.value}
+            ].map((stat, i, arr) => (
+              <div key={stat.label} className="flex items-center">
+                <div className="text-center px-6 md:px-12">
+                  <div className="text-2xl md:text-3xl font-extrabold text-white">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs text-white/60 mt-1">{stat.label}</div>
                 </div>
-                <div className="text-xs text-white/40 mt-1">{stat.label}</div>
+                {i < arr.length - 1 && (
+                  <hr className="w-[1px] h-12 bg-white/20 border-0" />
+                )}
               </div>
             ))}
           </motion.div>

@@ -54,9 +54,10 @@ export default function Navbar() {
       <nav 
         className={cn(
           "mx-auto flex items-center justify-between gap-4 transition-all duration-300 relative",
+          "w-[95%] max-w-6xl", // Consistent width for both states
           scrolled
-            ? "w-[95%] max-w-6xl bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-full py-2.5 px-6 shadow-2xl"
-            : "container-max bg-transparent py-2 px-6"
+            ? "bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-full py-2.5 px-6 shadow-2xl"
+            : "bg-transparent py-3 px-6"
         )}
       >
         {/* Logo */}
