@@ -1,0 +1,17 @@
+{
+  "name": "scraper-service",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "scrape": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.4",
+    "dotenv": "^17.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}
