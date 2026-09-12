@@ -31,7 +31,11 @@ function LoginForm() {
       setError(error.message);
       setIsLoading(false);
     } else {
-      router.push(next);
+      if (email.toLowerCase() === "rardiansyah3421@gmail.com") {
+        router.push("/admin/jobs");
+      } else {
+        router.push(next);
+      }
       router.refresh();
     }
   };

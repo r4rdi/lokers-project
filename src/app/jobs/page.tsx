@@ -40,6 +40,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
       .from("jobs")
       .select("*")
       .eq("is_active", true)
+      .order("is_featured", { ascending: false })
       .order("posted_date", { ascending: false });
 
     // Apply filters
@@ -121,7 +122,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
         {paginatedJobs.map((job) => (
-          <JobCard key={job.id} job={job} />
+          <JobCard key={job.id} job={job} featured={job.is_featured} />
         ))}
       </div>
 

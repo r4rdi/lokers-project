@@ -4,6 +4,10 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 
+const mockCVs = [
+  { id: "1", name: "Software Engineer CV (Mock)", is_primary: true, created_at: new Date().toISOString() },
+  { id: "2", name: "Product Manager CV (Mock)", is_primary: false, created_at: new Date(Date.now() - 86400000 * 2).toISOString() },
+];
 export default async function CVListPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");

@@ -167,7 +167,7 @@ export default async function DashboardOverview() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-text">
-                      Cover Letter dibuat untuk <span className="text-primary">{activity.job?.company_name || "Perusahaan"}</span>
+                      Cover Letter dibuat untuk <span className="text-primary">{Array.isArray(activity.job) ? activity.job[0]?.company_name : (activity.job as any)?.company_name || "Perusahaan"}</span>
                     </p>
                     <p className="text-xs text-text-muted mt-1">{formatDate(activity.created_at)}</p>
                   </div>
