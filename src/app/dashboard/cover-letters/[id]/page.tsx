@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createServerClient } from "@/lib/supabase/server";
 import { ChevronLeft, Briefcase, Building2, MapPin } from "lucide-react";
 import CopyButton from "@/components/ui/CopyButton";
+import CoverLetterViewer from "./CoverLetterViewer";
 import { format } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 
@@ -88,17 +89,7 @@ export default async function CoverLetterDetailPage({ params }: CoverLetterPageP
         </div>
       )}
 
-      <div className="bg-surface border border-border rounded-xl overflow-hidden flex flex-col">
-        <div className="p-4 border-b border-border bg-surface-muted flex justify-between items-center">
-          <h3 className="text-sm font-semibold text-ink">Isi Surat Lamaran</h3>
-          <CopyButton textToCopy={coverLetter.content} />
-        </div>
-        <div className="p-6 md:p-8">
-          <div className="prose prose-sm md:prose-base max-w-none text-text leading-relaxed whitespace-pre-wrap">
-            {coverLetter.content}
-          </div>
-        </div>
-      </div>
+        <CoverLetterViewer content={coverLetter.content} />
     </div>
   );
 }

@@ -107,20 +107,48 @@ export default function JobCard({ job, featured = false }: JobCardProps) {
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2 mb-6">
-        <span className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-white/70">
-          {job.job_type.replace('-', ' ')}
-        </span>
-        <span className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-white/70">
-          Tingkat senior
-        </span>
-        <span className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-white/70">
-          Jarak jauh
-        </span>
+        {job.job_type && (
+          <span className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-white/70">
+            {job.job_type.replace('-', ' ')}
+          </span>
+        )}
+        
+        {(() => {
+          // Extract experience if it was injected into description by normalizer
+          let experience = null;
+          let cleanDesc = job.description;
+          if (cleanDesc.startsWith("Pengalaman: ")) {
+            const parts = cleanDesc.split("\n\n");
+            experience = parts[0].replace("Pengalaman: ", "");
+            cleanDesc = parts.slice(1).join("\n\n");
+          }
+          
+          return (
+            <>
+              {experience && (
+                <span className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-white/70">
+                  {experience}
+                </span>
+              )}
+              {job.location && !job.location.toLowerCase().includes('indonesia') && (
+                <span className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/10 text-[11px] font-medium text-white/70 truncate max-w-[120px]">
+                  {job.location}
+                </span>
+              )}
+            </>
+          );
+        })()}
       </div>
 
       {/* Description Snippet */}
       <p className="text-xs text-white/40 line-clamp-2 mb-6 flex-grow leading-relaxed hidden">
-        {stripHtml(job.description)}
+        {(() => {
+           let cleanDesc = job.description;
+           if (cleanDesc.startsWith("Pengalaman: ")) {
+             cleanDesc = cleanDesc.split("\n\n").slice(1).join("\n\n");
+           }
+           return stripHtml(cleanDesc);
+        })()}
       </p>
 
       <div className="flex-grow" />

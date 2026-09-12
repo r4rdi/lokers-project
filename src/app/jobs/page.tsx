@@ -24,9 +24,9 @@ interface JobsPageProps {
 async function JobList({ searchParams }: { searchParams: any }) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
-  
+
   let jobs: Job[] = [];
-  
+
   if (!isMockEnv) {
     // Use service role to bypass RLS recursion bug on public job listing
     const { createClient } = await import("@supabase/supabase-js");
@@ -34,7 +34,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
-    
+
     // Build query
     let query = supabase
       .from("jobs")
@@ -46,7 +46,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
     if (searchParams.job_type) {
       query = query.eq("job_type", searchParams.job_type);
     }
-    
+
     if (searchParams.search || searchParams.location) {
       if (searchParams.search) {
         query = query.ilike("title", `%${searchParams.search}%`);
@@ -81,7 +81,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
   const perPage = 21;
   const totalPages = Math.ceil(totalJobs / perPage);
   const currentPage = Number(searchParams.page) || 1;
-  
+
   const startIndex = (currentPage - 1) * perPage;
   const paginatedJobs = jobs.slice(startIndex, startIndex + perPage);
 
@@ -93,9 +93,9 @@ async function JobList({ searchParams }: { searchParams: any }) {
         </div>
         <h3 className="text-h3 text-ink mb-2">Belum ada lowongan</h3>
         <p className="text-body text-text-muted max-w-md">
-          {isMockEnv 
+          {isMockEnv
             ? "Database Supabase belum terhubung. Konfigurasi .env.local terlebih dahulu."
-            : "Maaf, kami tidak dapat menemukan lowongan yang sesuai dengan filter Anda. Silakan coba kata kunci lain atau jalankan API /api/jobs/sync untuk menarik data."}
+            : "Maaf, kami tidak dapat menemukan lowongan yang sesuai dengan filter Anda. Silakan coba kata kunci lain."}
         </p>
       </div>
     );
@@ -113,7 +113,7 @@ async function JobList({ searchParams }: { searchParams: any }) {
         <div className="flex items-center gap-2 text-sm text-white/60">
           <span>Urutkan:</span>
           <button className="flex items-center gap-1 font-medium text-white hover:text-blue-400">
-            Terbaru 
+            Terbaru
             <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
           </button>
         </div>
@@ -161,7 +161,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
             {/* Main Content */}
             <div className="w-full lg:w-3/4">
-              <Suspense 
+              <Suspense
                 fallback={
                   <>
                     <div className="mb-6 flex flex-wrap justify-between items-end gap-4 border-b border-white/5 pb-4">

@@ -20,36 +20,69 @@ export default async function DashboardOverview() {
     .eq("id", user?.id)
     .single();
 
+  // Fetch actual counts
+  const [{ count: cvCount }, { count: clCount }, { count: savedCount, error: savedError }] = await Promise.all([
+    supabase.from("cvs").select("*", { count: "exact", head: true }).eq("user_id", user?.id),
+    supabase.from("cover_letters").select("*", { count: "exact", head: true }).eq("user_id", user?.id),
+    supabase.from("saved_jobs").select("*", { count: "exact", head: true }).eq("user_id", user?.id)
+  ]);
+
+  // Fetch recent cover letters for activity feed
+  const { data: recentCoverLetters } = await supabase
+    .from("cover_letters")
+    .select(`
+      id, 
+      created_at,
+      job:jobs ( company_name )
+    `)
+    .eq("user_id", user?.id)
+    .order("created_at", { ascending: false })
+    .limit(3);
+
+  // Fetch primary CV
+  const { data: primaryCv } = await supabase
+    .from("cvs")
+    .select("name, updated_at")
+    .eq("user_id", user?.id)
+    .eq("is_primary", true)
+    .single();
+
   const stats = [
     {
       label: "CV Tersimpan",
-      value: "2",
+      value: (cvCount || 0).toString(),
       icon: FileText,
       color: "text-blue-500",
       bgColor: "bg-blue-50",
     },
     {
       label: "Cover Letter Dibuat",
-      value: "15",
+      value: (clCount || 0).toString(),
       icon: Sparkles,
       color: "text-purple-500",
       bgColor: "bg-purple-50",
     },
     {
       label: "Lowongan Disimpan",
-      value: "8",
+      value: savedError ? "0" : (savedCount || 0).toString(),
       icon: Bookmark,
       color: "text-teal-500",
       bgColor: "bg-teal-50",
     },
     {
       label: "Profile Views",
-      value: "142",
+      value: "0", // Profile views usually require complex tracking, default 0 for MVP
       icon: TrendingUp,
       color: "text-orange-500",
       bgColor: "bg-orange-50",
     },
   ];
+
+  // Helper for relative time (very basic fallback if date-fns is not imported on this page, but wait, we can just use simple string formatting)
+  const formatDate = (isoString: string) => {
+    const d = new Date(isoString);
+    return `${d.toLocaleDateString('id-ID')} ${d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}`;
+  };
 
   return (
     <div className="space-y-8">
@@ -88,16 +121,24 @@ export default async function DashboardOverview() {
           </div>
           
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 border border-border rounded-lg bg-surface-muted">
-              <div className="flex items-center gap-3">
-                <FileText className="w-8 h-8 text-text-subtle" />
-                <div>
-                  <p className="font-semibold text-text">Software Engineer CV (ID)</p>
-                  <p className="text-xs text-text-muted">Diperbarui 2 hari yang lalu</p>
+            {primaryCv ? (
+              <div className="flex items-center justify-between p-4 border border-border rounded-lg bg-surface-muted">
+                <div className="flex items-center gap-3">
+                  <FileText className="w-8 h-8 text-text-subtle" />
+                  <div>
+                    <p className="font-semibold text-text">{primaryCv.name}</p>
+                    <p className="text-xs text-text-muted">
+                      Diperbarui {new Date(primaryCv.updated_at || new Date()).toLocaleDateString('id-ID')}
+                    </p>
+                  </div>
                 </div>
+                <span className="px-2.5 py-1 bg-success/10 text-success text-xs font-bold rounded-md">Utama</span>
               </div>
-              <span className="px-2.5 py-1 bg-success/10 text-success text-xs font-bold rounded-md">Utama</span>
-            </div>
+            ) : (
+              <div className="p-4 border border-dashed border-border rounded-lg bg-surface-muted text-center">
+                <p className="text-sm text-text-muted mb-2">Belum ada CV utama</p>
+              </div>
+            )}
             
             <Link 
               href="/dashboard/cv/create"
@@ -115,22 +156,26 @@ export default async function DashboardOverview() {
           </div>
           
           <div className="space-y-6">
-            {[1, 2, 3].map((_, i) => (
-              <div key={i} className="flex gap-4 relative">
-                {i !== 2 && (
-                  <div className="absolute left-[11px] top-8 bottom-0 w-0.5 bg-border -z-10" />
-                )}
-                <div className="w-6 h-6 rounded-full bg-primary-soft flex items-center justify-center shrink-0 mt-0.5">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
+            {recentCoverLetters && recentCoverLetters.length > 0 ? (
+              recentCoverLetters.map((activity, i) => (
+                <div key={activity.id} className="flex gap-4 relative">
+                  {i !== recentCoverLetters.length - 1 && (
+                    <div className="absolute left-[11px] top-8 bottom-0 w-0.5 bg-border -z-10" />
+                  )}
+                  <div className="w-6 h-6 rounded-full bg-primary-soft flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-2 h-2 rounded-full bg-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-text">
+                      Cover Letter dibuat untuk <span className="text-primary">{activity.job?.company_name || "Perusahaan"}</span>
+                    </p>
+                    <p className="text-xs text-text-muted mt-1">{formatDate(activity.created_at)}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-text">
-                    Cover Letter dibuat untuk <span className="text-primary">PT Gojek Tokopedia</span>
-                  </p>
-                  <p className="text-xs text-text-muted mt-1">Hari ini, 14:30</p>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-sm text-text-muted italic text-center py-4">Belum ada aktivitas.</p>
+            )}
           </div>
         </div>
       </div>

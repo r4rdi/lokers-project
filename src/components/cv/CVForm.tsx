@@ -220,6 +220,26 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
         )}
       </div>
 
+      {/* Skills (ATS Keywords) */}
+      <div className="bg-surface border border-border rounded-xl p-6 md:p-8 space-y-6">
+        <div className="border-b border-border pb-4">
+          <h3 className="text-h3 text-ink">Keahlian (Skills / ATS Keywords)</h3>
+          <p className="text-sm text-text-muted mt-1">Pisahkan dengan koma. Kata kunci ini sangat penting untuk pencocokan ATS.</p>
+        </div>
+        <div>
+          <textarea 
+            value={Array.isArray(formData.skills) ? formData.skills.join(", ") : formData.skills}
+            onChange={(e) => {
+              const skillsArray = e.target.value.split(",").map(s => s.trim()).filter(s => s);
+              handleChange("skills", skillsArray);
+            }}
+            rows={4}
+            placeholder="misal: React, TypeScript, Project Management, Agile"
+            className="w-full px-4 py-2.5 rounded-md border border-border bg-surface-muted text-sm focus:border-primary outline-none resize-y"
+          />
+        </div>
+      </div>
+
       <div className="flex justify-end pt-4">
         <button
           type="submit"

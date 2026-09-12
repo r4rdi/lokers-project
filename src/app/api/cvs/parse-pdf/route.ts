@@ -40,15 +40,17 @@ export async function POST(request: Request) {
 
     // Construct the prompt to ask Gemini to output JSON
     const prompt = `
-Kamu adalah sistem ekstraksi data CV (Resume) profesional. Dari teks mentah CV berikut, ekstrak informasi ke dalam format JSON yang tepat dan terstruktur.
-Abaikan teks atau pemformatan yang berantakan, fokus pada data inti.
+Kamu adalah sistem ekstraksi data ATS (Applicant Tracking System) profesional.
+Tugasmu adalah memindai teks mentah CV berikut dan mengekstrak informasi penting ke dalam format JSON yang tepat dan terstruktur.
+
+PENTING: Ekstraksi ini digunakan untuk keperluan ATS matching. Pastikan semua *hard skills*, perangkat lunak (software/tools), bahasa pemrograman, metrik/angka keberhasilan (misal: "meningkatkan penjualan 20%"), dan kata kunci industri diekstrak secara akurat.
 
 Teks Mentah CV:
 """
 ${rawText}
 """
 
-Kembalikan HANYA JSON murni yang sesuai dengan struktur berikut, tanpa tag markdown, tanpa backticks, tanpa penjelasan apapun:
+Kembalikan HANYA JSON murni yang sesuai dengan struktur persis berikut, tanpa tag markdown, tanpa penjelasan:
 {
   "fullName": "String - Nama lengkap kandidat",
   "email": "String - Alamat email",
@@ -56,26 +58,26 @@ Kembalikan HANYA JSON murni yang sesuai dengan struktur berikut, tanpa tag markd
   "location": "String - Lokasi tempat tinggal atau asal",
   "linkedin": "String - URL profil LinkedIn (jika ada, kosongkan jika tidak)",
   "github": "String - URL profil GitHub (jika ada, kosongkan jika tidak)",
-  "summary": "String - Ringkasan singkat profesional atau deskripsi diri (jika ada)",
+  "summary": "String - Ringkasan singkat profesional atau deskripsi diri yang menonjolkan keahlian utama",
   "experience": [
     {
       "title": "String - Posisi atau Jabatan",
       "company": "String - Nama perusahaan",
       "startDate": "String - Tanggal mulai (misal: Jan 2020 atau 2020)",
       "endDate": "String - Tanggal selesai (misal: Saat ini atau Des 2022)",
-      "description": "String - Deskripsi singkat tanggung jawab dan pencapaian"
+      "description": "String - Deskripsi tanggung jawab dan pencapaian (wajib pertahankan angka/metrik jika ada)"
     }
   ],
   "education": [
     {
       "institution": "String - Nama sekolah atau universitas",
-      "degree": "String - Gelar atau tingkatan",
+      "degree": "String - Gelar atau tingkatan (misal: S1, Bachelor, Sarjana)",
       "field": "String - Jurusan atau bidang studi",
       "startDate": "String - Tanggal mulai",
       "endDate": "String - Tanggal selesai"
     }
   ],
-  "skills": ["Array of Strings - Daftar skill"]
+  "skills": ["Array of Strings - Ekstrak setiap keahlian individu (khususnya hard skills/tools) ke dalam list terpisah"]
 }
 `;
 
