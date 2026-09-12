@@ -3,7 +3,7 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Briefcase, ArrowRight, AlertCircle } from "lucide-react";
+import { Briefcase, ArrowRight, AlertCircle, Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 function LoginForm() {
