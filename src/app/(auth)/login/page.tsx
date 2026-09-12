@@ -37,145 +37,108 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2">
-      {/* Left Panel */}
-      <div className="hidden lg:flex flex-col justify-between p-12 bg-ink text-white relative overflow-hidden">
-        {/* Decor */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[100px]" />
-        
-        <div className="relative z-10">
-          <Link href="/" className="flex items-center gap-2 mb-12">
-            <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center">
-              <Briefcase className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-extrabold tracking-tight">
-              Lokers<span className="text-primary">!</span>
+    <div className="min-h-screen flex items-center justify-center bg-[#0B090F] relative overflow-hidden font-sans text-white p-4">
+      {/* Decorative Blobs */}
+      <div className="absolute top-[10%] right-[15%] w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[0%] left-[10%] w-[500px] h-[500px] bg-orange-600/20 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="relative z-10 w-full max-w-[360px] flex flex-col">
+        {/* Logo Outside Card */}
+        <div className="flex justify-center mb-6">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-3xl font-extrabold tracking-tight italic drop-shadow-lg">
+              Lokers<span className="text-blue-500">!</span>
             </span>
           </Link>
-
-          <div className="max-w-md">
-            <h1 className="text-4xl font-extrabold mb-6 leading-tight">
-              Selamat datang kembali
-            </h1>
-            <p className="text-lg text-white/60 leading-relaxed mb-8">
-              Pekerjaan impian Anda sudah menunggu. Lanjutkan proses melamar Anda dengan AI hari ini.
-            </p>
-          </div>
         </div>
 
-        <div className="relative z-10">
-          <div className="p-6 rounded-xl bg-white/5 border border-white/10 glass-subtle max-w-sm">
-            <p className="text-sm text-white/80 italic mb-4">
-              &ldquo;Lokers membuat proses melamar kerja yang tadinya membosankan menjadi sangat mudah. Saya dapat panggilan interview hanya dalam 3 hari!&rdquo;
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/30" />
-              <div>
-                <p className="text-sm font-bold">Budi Santoso</p>
-                <p className="text-xs text-white/50">Software Engineer</p>
+        {/* Glass Card */}
+        <div className="w-full bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+
+        <div className="mb-6 text-center">
+          <h2 className="text-xl font-bold mb-2">Log in</h2>
+          <p className="text-[11px] text-white/50 mt-1">Welcome back, please login</p>
+        </div>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+            <p className="text-[11px] text-red-400 font-medium">{error}</p>
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-3">
+          <div className="space-y-1">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                <Mail className="w-4 h-4 text-white/40" />
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Panel */}
-      <div className="flex items-center justify-center p-8 bg-surface">
-        <div className="w-full max-w-md">
-          {/* Mobile Logo */}
-          <Link href="/" className="lg:hidden flex items-center gap-2 mb-12 justify-center">
-            <div className="w-10 h-10 rounded-md bg-primary flex items-center justify-center">
-              <Briefcase className="w-6 h-6 text-white" />
-            </div>
-            <span className="text-2xl font-extrabold tracking-tight text-ink">
-              Lokers<span className="text-primary">!</span>
-            </span>
-          </Link>
-
-          <div className="mb-10 text-center lg:text-left">
-            <h2 className="text-h2 text-ink mb-3">Masuk ke Akun</h2>
-            <p className="text-body text-text-muted">
-              Masukkan email dan password Anda
-            </p>
-          </div>
-
-          {error && (
-            <div className="mb-6 p-4 rounded-md bg-error/10 border border-error/20 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-error shrink-0 mt-0.5" />
-              <p className="text-sm text-error font-medium">{error}</p>
-            </div>
-          )}
-
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-label text-text mb-2"
-              >
-                Email
-              </label>
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="nama@email.com"
+                placeholder="Email"
                 required
-                className="w-full px-4 py-3 rounded-md border border-border bg-surface-muted text-text placeholder:text-text-subtle focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all outline-none text-xs"
               />
             </div>
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label
-                  htmlFor="password"
-                  className="block text-label text-text"
-                >
-                  Password
-                </label>
-                <Link
-                  href="/reset-password"
-                  className="text-xs font-semibold text-primary hover:text-primary-hover"
-                >
-                  Lupa Password?
-                </Link>
+          </div>
+
+          <div className="space-y-1">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                <svg className="w-4 h-4 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
               </div>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Password"
                 required
-                className="w-full px-4 py-3 rounded-md border border-border bg-surface-muted text-text placeholder:text-text-subtle focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/40 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all outline-none text-xs"
               />
             </div>
+          </div>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-3.5 px-4 bg-primary hover:bg-primary-hover text-on-primary font-bold rounded-md transition-colors shadow-subtle flex items-center justify-center gap-2 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
-            >
-              {isLoading ? (
-                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  Masuk Sekarang
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-8 text-center text-sm text-text-muted">
-            Belum punya akun?{" "}
-            <Link
-              href="/register"
-              className="font-bold text-primary hover:text-primary-hover"
-            >
-              Daftar Gratis
+          <div className="flex items-center justify-between mt-4 mb-5 px-1">
+            <label className="flex items-center gap-2 cursor-pointer group">
+              <div className="w-4 h-4 rounded border border-white/20 bg-white/5 flex items-center justify-center group-hover:border-blue-500 transition-colors">
+                <input type="checkbox" className="sr-only" />
+                <svg className="w-3 h-3 text-transparent group-has-[:checked]:text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-[11px] text-white/50 group-hover:text-white/80 transition-colors">Remember me</span>
+            </label>
+            <Link href="/reset-password" className="text-[11px] text-blue-400 hover:text-blue-300 transition-colors font-medium">
+              Forgot Password?
             </Link>
           </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-colors mt-4 disabled:opacity-70 disabled:cursor-not-allowed text-xs"
+          >
+            {isLoading ? (
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto block" />
+            ) : (
+              "Continue"
+            )}
+          </button>
+        </form>
+
+        <div className="mt-5 text-center text-[11px] text-white/50">
+          Don't have an account?{" "}
+          <Link href="/register" className="font-bold text-blue-400 hover:text-blue-300 transition-colors">
+            Sign-up
+          </Link>
         </div>
+      </div>
       </div>
     </div>
   );
