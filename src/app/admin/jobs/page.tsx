@@ -7,13 +7,13 @@ export default async function AdminJobsPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
 
-  let jobs: Job[] = [];
+  let jobs: any[] = [];
   
   if (!isMockEnv) {
     const supabase = await createServerClient();
     const { data } = await supabase
       .from("jobs")
-      .select("id, title, company_name, source, is_active, posted_date, is_featured")
+      .select("*")
       .order("is_featured", { ascending: false })
       .order("posted_date", { ascending: false })
       .limit(20); // Just fetch 20 for MVP table
@@ -40,7 +40,7 @@ export default async function AdminJobsPage() {
         is_featured: true,
         posted_date: now.toISOString(),
         formattedPostDate: now.toLocaleDateString('id-ID')
-      },
+      } as any,
       {
         id: "2",
         title: "Product Designer",
@@ -50,9 +50,9 @@ export default async function AdminJobsPage() {
         is_featured: false,
         posted_date: yesterday.toISOString(),
         formattedPostDate: yesterday.toLocaleDateString('id-ID')
-      },
+      } as any,
     ];
   }
 
-  return <AdminJobsClient initialJobs={jobs} />;
+  return <AdminJobsClient initialJobs={jobs as any} />;
 }

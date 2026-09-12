@@ -85,7 +85,7 @@ export default function ScrapingDashboard() {
 
       // Delay fetching logs slightly to allow the script to insert the initial log
       setTimeout(fetchLogs, 1000);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message);
     } finally {
       setTriggering(false);

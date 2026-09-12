@@ -1,5 +1,5 @@
 import { createServerClient } from "@/lib/supabase/server";
-import { Briefcase, MapPin, DollarSign, Clock, ExternalLink, Trash2 } from "lucide-react";
+import { Briefcase, MapPin, DollarSign, Clock, ExternalLink, Trash2, Bookmark } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
@@ -47,12 +47,27 @@ let bookmarks: BookmarkData[] = [];
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
         
-      bookmarks = data || [];
+      bookmarks = (data as any) || [];
     }
   }
 
   // Mock data if empty for layout presentation
   if (bookmarks.length === 0 && isMockEnv) {
+    const mockBookmark: any = {
+      id: "1",
+      created_at: new Date().toISOString(),
+      jobs: {
+        id: "job-1",
+        title: "Frontend Developer",
+        company_name: "Tech Corp",
+        location: "Jakarta",
+        job_type: "Full-time",
+        salary_min: 10000000,
+        salary_max: 20000000,
+        salary_currency: "IDR",
+        posted_date: new Date().toISOString(),
+      }
+    };
     bookmarks = [mockBookmark];
   }
 
