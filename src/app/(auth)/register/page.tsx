@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"job_seeker" | "employer">("job_seeker");
+  const [role, setRole] = useState<"job_seeker" | "employer" | "admin">("job_seeker");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -121,7 +121,7 @@ export default function RegisterPage() {
 
               <form onSubmit={handleRegister} className="space-y-5">
                 {/* Role Selection */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="grid grid-cols-3 gap-3 mb-6">
                   <label
                     className={`cursor-pointer px-4 py-3 rounded-md border text-center transition-all ${
                       role === "job_seeker"
@@ -155,6 +155,23 @@ export default function RegisterPage() {
                       className="sr-only"
                     />
                     Perusahaan
+                  </label>
+                  <label
+                    className={`cursor-pointer px-4 py-3 rounded-md border text-center transition-all ${
+                      role === "admin"
+                        ? "border-primary bg-primary-soft text-primary font-bold"
+                        : "border-border bg-surface text-text-muted hover:bg-surface-muted"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value="admin"
+                      checked={role === "admin"}
+                      onChange={() => setRole("admin")}
+                      className="sr-only"
+                    />
+                    Admin
                   </label>
                 </div>
 

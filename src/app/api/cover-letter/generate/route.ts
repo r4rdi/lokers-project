@@ -57,9 +57,23 @@ export async function POST(request: Request) {
     
     const ai = new GoogleGenAI({ apiKey });
 
-    // 6. Buat Prompt (Sesuai Blueprint MVP)
+    // 6. Buat Prompt (Sesuai Blueprint MVP - ATS Friendly)
     const prompt = `
-Kamu adalah konsultan karier profesional dengan 20 tahun pengalaman. Tugasmu menulis surat lamaran kerja yang natural, profesional, dan meyakinkan. Gunakan data CV kandidat dan deskripsi pekerjaan berikut untuk menyesuaikan surat. Jangan mengarang fakta atau pengalaman yang tidak ada di CV. Tulis dengan gaya yang hangat namun formal. Tulis surat lamaran menggunakan bahasa yang paling relevan dengan bahasa deskripsi lowongan kerja. Jika lowongannya berbahasa Indonesia, gunakan bahasa Indonesia.
+Kamu adalah Master Konsultan Karier & Pakar ATS (Applicant Tracking System) dengan 20 tahun pengalaman.
+Tugasmu adalah menulis surat lamaran kerja (Cover Letter) yang profesional, memikat HRD, dan dioptimalkan 100% untuk lolos filter sistem ATS.
+
+PANDUAN ATS-FRIENDLY:
+1. Cocokkan secara eksplisit "Kebutuhan/Syarat" dari deskripsi pekerjaan dengan "Data CV" (skills, pengalaman). Gunakan kata kunci (keywords) persis seperti di lowongan jika kandidat memilikinya.
+2. Sorot hasil (angka/metrik) dari pengalaman CV kandidat (misal: "berhasil meningkatkan X sebanyak Y%").
+3. Jangan pernah mengarang pengalaman, skill, atau angka yang tidak ada di dalam Data CV.
+4. Gunakan bahasa yang sama dengan deskripsi pekerjaan (jika pekerjaan ditulis dalam Bahasa Indonesia, tulis surat dalam Bahasa Indonesia yang formal dan lugas. Jika dalam bahasa Inggris, gunakan bahasa Inggris profesional).
+
+STRUKTUR SURAT LAMARAN (Tanpa Alamat/Tanggal di atas, langsung mulai dari sapaan):
+- Sapaan: Kepada Yth. Hiring Manager / Tim Rekrutmen [Nama Perusahaan],
+- Pembuka: Niat melamar dengan menyebutkan posisi [Nama Pekerjaan] secara spesifik.
+- Value Proposition (1 paragraf): Ringkasan mengapa kandidat sangat cocok, menyebutkan total pengalaman atau keunggulan utama.
+- Pencapaian Utama (Gunakan 3-4 Bullet Points): Kaitkan secara langsung pengalaman dari CV kandidat dengan requirements loker. Gunakan angka jika ada.
+- Penutup: Antusiasme untuk wawancara dan Call to Action.
 
 Data CV Kandidat:
 ${JSON.stringify(cv.data, null, 2)}
@@ -70,7 +84,7 @@ Perusahaan: ${job.company_name}
 Deskripsi: ${job.description}
 Kebutuhan/Syarat: ${job.requirements || '-'}
 
-Buat surat lamaran dengan struktur: pembukaan, isi (kaitkan pengalaman dan skill dengan kebutuhan pekerjaan), penutup. Panjang sekitar 300-400 kata. Hasil akhir harus langsung berupa teks surat lamaran tanpa perlu pengantar tambahan darimu.
+HANYA KEMBALIKAN TEKS SURAT LAMARAN. Jangan menambahkan pembuka/penutup pesan (seperti "Ini surat Anda:"). Pastikan format paragraf dan bullet points rapi.
     `;
 
     // 7. Generate Konten dengan Gemini

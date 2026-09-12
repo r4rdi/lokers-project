@@ -102,11 +102,13 @@ export default async function CVListPage() {
                 >
                   Edit Data
                 </Link>
-                <button 
+                <Link 
+                  href={`/dashboard/cv/${cv.id}/print`}
+                  target="_blank"
                   className="flex-1 py-2 text-center text-sm font-semibold text-primary bg-primary-soft hover:bg-primary/20 transition-colors rounded-md"
                 >
                   Generate PDF
-                </button>
+                </Link>
               </div>
             </div>
           ))}

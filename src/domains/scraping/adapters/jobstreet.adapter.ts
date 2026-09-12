@@ -38,6 +38,8 @@ export const jobstreetAdapter: ScrapingAdapter = {
             companyLogoUrl: job.company_logo || "",
             location: job.location,
             jobType: job.job_type,
+            salary: job.salary,
+            experience: job.experience,
             description: job.description,
             requirements: "",
             postedDate: job.date_posted,

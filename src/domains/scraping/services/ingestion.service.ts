@@ -48,7 +48,7 @@ export async function ingestJobs(source: string, rawJobs: RawJobRecord[]): Promi
         .from("jobs")
         .upsert(jobToInsert, { 
           onConflict: "source,source_id", 
-          ignoreDuplicates: true // We skip updating existing jobs to avoid overwriting manual admin edits
+          ignoreDuplicates: false // Changed to false to allow updating old dummy data with the new accurately scraped metadata
         });
 
       if (error) {

@@ -33,7 +33,9 @@ export const remotiveAdapter: ScrapingAdapter = {
             companyLogoUrl: job.company_logo || "",
             location: job.location,
             jobType: job.job_type,
-            description: job.description.replace(/<[^>]*>?/gm, ''), // Remove HTML tags
+            salary: job.salary,
+            experience: job.experience,
+            description: job.description,
             requirements: "",
             postedDate: job.date_posted,
             applyUrl: job.apply_url,
