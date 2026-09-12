@@ -51,10 +51,11 @@ export async function POST(req: Request) {
       content: generatedText,
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error("Cover Letter Generation Error:", error);
+    const message = error instanceof Error ? error.message : "Failed to generate cover letter";
     return NextResponse.json(
-      { error: error.message || "Failed to generate cover letter" },
+      { error: message },
       { status: 500 }
     );
   }

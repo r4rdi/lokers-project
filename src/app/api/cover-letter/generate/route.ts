@@ -118,10 +118,11 @@ HANYA KEMBALIKAN TEKS SURAT LAMARAN. Jangan menambahkan pembuka/penutup pesan (s
       message: "Cover letter generated successfully" 
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error("Cover Letter Generation Error:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal Server Error", message: error.message }, 
+      { error: "Internal Server Error", message },
       { status: 500 }
     );
   }

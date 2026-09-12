@@ -1,9 +1,8 @@
 import { createServerClient } from "@/lib/supabase/server";
-import { Briefcase, MapPin, DollarSign, Clock, ExternalLink, Trash2 } from "lucide-react";
+import { Briefcase, MapPin, DollarSign, Clock, ExternalLink, Trash2, Bookmark } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
-import { formatSalary } from "@/lib/utils"; // I'll create this util or inline it
 
 const formatSalaryText = (min: number | null, max: number | null, currency: string) => {
   if (!min && !max) return "Gaji tidak ditampilkan";

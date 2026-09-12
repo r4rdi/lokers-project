@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Search,
   Menu,
   X,
   Briefcase,
@@ -15,7 +14,6 @@ import {
   LogOut,
   User,
   ChevronDown,
-  Sparkles,
   Globe,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -45,7 +43,11 @@ export default function Navbar() {
   // Close menus on route change
   useEffect(() => {
     setMobileOpen(false);
+  }, [pathname]);
+  useEffect(() => {
     setUserMenuOpen(false);
+  }, [pathname]);
+  useEffect(() => {
     setLangMenuOpen(false);
   }, [pathname]);
 

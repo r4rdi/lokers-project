@@ -34,10 +34,18 @@ export default function ScrapingDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [supabase]);
+  }, []);
 
   useEffect(() => {
-    fetchLogs();
+    let isCancelled = false;
+
+    const fetchLogsAsync = async () => {
+      await fetchLogs();
+    };
+
+    fetchLogsAsync().catch(() => {
+      // Error is handled in fetchLogs
+    });
 
     // Setup realtime subscription for updates
     const channel = supabase
@@ -49,16 +57,19 @@ export default function ScrapingDashboard() {
           schema: 'public',
           table: 'scraping_logs',
         },
-        () => {
-          fetchLogs();
+        async () => {
+          if (!isCancelled) {
+            await fetchLogs();
+          }
         }
       )
       .subscribe();
 
     return () => {
+      isCancelled = true;
       supabase.removeChannel(channel);
     };
-  }, [fetchLogs]);
+  }, [fetchLogs, supabase]);
 
   const handleTriggerScraping = async (e: React.FormEvent) => {
     e.preventDefault();

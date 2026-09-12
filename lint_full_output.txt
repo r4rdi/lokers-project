@@ -1,0 +1,155 @@
+
+> lokers-project@0.1.0 lint
+> eslint
+
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\admin\layout.tsx[24m[0m
+[0m  [2m4:48[22m  [33mwarning[39m  'Settings' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\admin\scraping\page.tsx[24m[0m
+[0m  [2m40:5[22m  [31merror[39m    Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mM:\coding\lokers-project\src\app\admin\scraping\page.tsx:40:5[0m
+[0m  38 |[0m
+[0m  39 |   useEffect(() => {[0m
+[0m> 40 |     fetchLogs();[0m
+[0m     |     ^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  41 |[0m
+[0m  42 |     // Setup realtime subscription for updates[0m
+[0m  43 |     const channel = supabase  [2mreact-hooks/set-state-in-effect[22m[0m
+[0m  [2m61:6[22m  [33mwarning[39m  React Hook useEffect has a missing dependency: 'supabase'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\admin\users\page.tsx[24m[0m
+[0m  [2m1:8[22m  [33mwarning[39m  'Link' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\admin\scrape\route.ts[24m[0m
+[0m  [2m68:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\cover-letter\generate\route.ts[24m[0m
+[0m  [2m107:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\cvs\parse-pdf\route.ts[24m[0m
+[0m  [2m98:14[22m  [33mwarning[39m  'parseErr' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\employer\jobs\route.ts[24m[0m
+[0m  [2m85:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\generate\cover-letter\route.ts[24m[0m
+[0m  [2m54:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\jobs\sync\route.ts[24m[0m
+[0m   [2m5:27[22m  [33mwarning[39m  'req' is defined but never used           [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m26:19[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\subscription\checkout\route.ts[24m[0m
+[0m  [2m54:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\webhooks\payment\route.ts[24m[0m
+[0m  [2m70:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\dashboard\bookmarks\page.tsx[24m[0m
+[0m   [2m6:10[22m  [33mwarning[39m  'formatSalary' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m71:14[22m  [31merror[39m    'Bookmark' is not defined                 [2mreact/jsx-no-undef[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\dashboard\cover-letters\create\page.tsx[24m[0m
+[0m  [2m12:34[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m13:36[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\dashboard\cv\page.tsx[24m[0m
+[0m  [2m11:12[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\jobs\page.tsx[24m[0m
+[0m   [2m2:10[22m  [33mwarning[39m  'createServerClient' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m24:58[22m  [31merror[39m    Unexpected any. Specify a different type        [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\cv\PDFUploader.tsx[24m[0m
+[0m  [2m4:44[22m  [33mwarning[39m  'CheckCircle2' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\dashboard\Sidebar.tsx[24m[0m
+[0m  [2m33:5[22m  [33mwarning[39m  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  [2m@next/next/no-location-assign-relative-destination[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\employer\Sidebar.tsx[24m[0m
+[0m  [2m30:5[22m  [33mwarning[39m  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  [2m@next/next/no-location-assign-relative-destination[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\home\IntegrationMarquee.tsx[24m[0m
+[0m  [2m4:10[22m  [33mwarning[39m  'Globe' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\jobs\GenerateCoverLetterButton.tsx[24m[0m
+[0m  [2m43:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\jobs\JobFilterBar.tsx[24m[0m
+[0m  [2m5:31[22m  [33mwarning[39m  'MapPin' is defined but never used     [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m5:39[22m  [33mwarning[39m  'Briefcase' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m5:50[22m  [33mwarning[39m  'Filter' is defined but never used     [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\jobs\JobFilters.tsx[24m[0m
+[0m  [2m23:9[22m  [33mwarning[39m  'searchParams' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\layout\Navbar.tsx[24m[0m
+[0m   [2m8:3[22m  [33mwarning[39m  'Search' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m18:3[22m  [33mwarning[39m  'Sparkles' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m47:5[22m  [31merror[39m    Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mM:\coding\lokers-project\src\components\layout\Navbar.tsx:47:5[0m
+[0m  45 |   // Close menus on route change[0m
+[0m  46 |   useEffect(() => {[0m
+[0m> 47 |     setMobileOpen(false);[0m
+[0m     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  48 |     setUserMenuOpen(false);[0m
+[0m  49 |     setLangMenuOpen(false);[0m
+[0m  50 |   }, [pathname]);  [2mreact-hooks/set-state-in-effect[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\dealls.adapter.ts[24m[0m
+[0m  [2m28:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\glints.adapter.ts[24m[0m
+[0m  [2m27:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\jobicy.adapter.ts[24m[0m
+[0m  [2m22:17[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\jobstreet.adapter.ts[24m[0m
+[0m  [2m33:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\linkedin.adapter.ts[24m[0m
+[0m  [2m33:58[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m49:21[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\remotive.adapter.ts[24m[0m
+[0m  [2m28:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\services\ingestion.service.ts[24m[0m
+[0m  [2m63:17[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\services\orchestrator.service.ts[24m[0m
+[0m   [2m1:27[22m  [33mwarning[39m  'ScrapingInput' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m42:21[22m  [31merror[39m    Unexpected any. Specify a different type   [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\proxy.ts[24m[0m
+[0m   [2m8:7[22m   [33mwarning[39m  'ROLE_ROUTES' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m44:48[22m  [33mwarning[39m  'options' is defined but never used               [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-db-insert.js[24m[0m
+[0m  [2m1:15[22m  [31merror[39m  A `require()` style import is forbidden  [2m@typescript-eslint/no-require-imports[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-insert.js[24m[0m
+[0m  [2m2:26[22m  [31merror[39m  A `require()` style import is forbidden  [2m@typescript-eslint/no-require-imports[22m[0m
+[0m  [2m3:15[22m  [31merror[39m  A `require()` style import is forbidden  [2m@typescript-eslint/no-require-imports[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-signup.mjs[24m[0m
+[0m  [2m13:11[22m  [33mwarning[39m  'data' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[31m[1m✖ 48 problems (27 errors, 21 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

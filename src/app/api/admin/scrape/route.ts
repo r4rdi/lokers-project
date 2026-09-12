@@ -65,10 +65,11 @@ export async function POST(request: Request) {
       message: `Scraping process for ${site} started in the background. Check scraping logs for updates.` 
     });
     
-  } catch (error: any) {
+  } catch (error) {
     console.error("Scrape API Error:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal Server Error", message: error.message }, 
+      { error: "Internal Server Error", message },
       { status: 500 }
     );
   }
