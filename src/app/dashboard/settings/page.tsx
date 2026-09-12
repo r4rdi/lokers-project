@@ -1,29 +1,35 @@
+// Mock data calculated outside of render to avoid impure function calls
+const mockSettings = {
+  profile: { full_name: "Budi Santoso", email: "budi@example.com", role: "job_seeker", phone: "+62 812 3456 7890", location: "Jakarta" },
+  subscription: { plan_id: "free", status: "active", current_period_end: new Date(Date.now() + 86400000 * 365 * 100).toISOString() }
+};
+
 import { createServerClient } from "@/lib/supabase/server";
 import { User, Lock, CreditCard, Save } from "lucide-react";
 
 export default async function SettingsPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
-  
+
   let profile = { full_name: "", email: "", role: "", phone: "", location: "" };
   let subscription = { plan_id: "free", status: "active", current_period_end: "" };
-  
+
   if (!isMockEnv) {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
-    
+
     if (user) {
       const [{ data: pData }, { data: sData }] = await Promise.all([
         supabase.from("profiles").select("*").eq("id", user.id).single(),
         supabase.from("subscriptions").select("*").eq("user_id", user.id).single()
       ]);
-      
+
       if (pData) profile = pData;
       if (sData) subscription = sData;
     }
   } else {
-    profile = { full_name: "Budi Santoso", email: "budi@example.com", role: "job_seeker", phone: "+62 812 3456 7890", location: "Jakarta" };
-    subscription = { plan_id: "free", status: "active", current_period_end: new Date(Date.now() + 86400000 * 365 * 100).toISOString() };
+    profile = mockSettings.profile;
+    subscription = mockSettings.subscription;
   }
 
   return (

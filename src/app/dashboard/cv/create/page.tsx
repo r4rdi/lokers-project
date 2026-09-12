@@ -8,16 +8,42 @@ import PDFUploader from "@/components/cv/PDFUploader";
 import Link from "next/link";
 import { ChevronLeft, Download } from "lucide-react";
 
+// Define the type for parsed CV data (matches PDFUploader's output)
+interface ParsedCVData {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedin: string;
+  github: string;
+  summary: string;
+  experience: Array<{
+    title: string;
+    company: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
+  education: Array<{
+    institution: string;
+    degree: string;
+    field: string;
+    startDate: string;
+    endDate: string;
+  }>;
+  skills: string[];
+}
+
 export default function CreateCVPage() {
   const router = useRouter();
-  const [parsedData, setParsedData] = useState<any>(null);
+  const [parsedData, setParsedData] = useState<ParsedCVData | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleUploadSuccess = (data: any) => {
+  const handleUploadSuccess = (data: ParsedCVData) => {
     setParsedData(data);
   };
 
-  const handleSubmit = async (formData: any) => {
+  const handleSubmit = async (formData: ParsedCVData) => {
     setIsSaving(true);
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();

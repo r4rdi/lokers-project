@@ -14,7 +14,7 @@ const ROLE_ROUTES: Record<string, string[]> = {
 // Auth routes (redirect to dashboard if already logged in)
 const AUTH_ROUTES = ["/login", "/register", "/reset-password"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Skip auth checks if Supabase is not configured (dev without credentials)
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -55,7 +55,7 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: Do NOT use getSession() — it reads from storage
+  // IMPORTANT: Do NOT use getSession() - it reads from storage
   // and isn't guaranteed to be valid. Use getUser() instead.
   const {
     data: { user },

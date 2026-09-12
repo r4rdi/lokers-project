@@ -28,20 +28,7 @@ export default async function CVListPage() {
 
   // Mock data if empty for layout presentation
   if (cvs.length === 0 && isMockEnv) {
-    cvs = [
-      {
-        id: "1",
-        name: "Software Engineer CV (ID)",
-        is_primary: true,
-        created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-      },
-      {
-        id: "2",
-        name: "Frontend Developer CV (EN)",
-        is_primary: false,
-        created_at: new Date(Date.now() - 86400000 * 10).toISOString(),
-      }
-    ];
+    cvs = mockCVs;
   }
 
   return (

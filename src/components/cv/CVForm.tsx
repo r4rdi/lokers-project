@@ -3,9 +3,39 @@
 import { useState } from "react";
 import { Save, Plus, Trash2 } from "lucide-react";
 
+interface WorkExperienceForm {
+  title: string;
+  company: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
+
+interface EducationForm {
+  institution: string;
+  degree: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+}
+
+interface CVFormData {
+  name: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedin: string;
+  github: string;
+  summary: string;
+  experience: WorkExperienceForm[];
+  education: EducationForm[];
+  skills: string[];
+}
+
 interface CVFormProps {
-  initialData?: any;
-  onSubmit: (data: any) => void;
+  initialData?: CVFormData;
+  onSubmit: (data: CVFormData) => void;
   isLoading?: boolean;
 }
 
@@ -24,7 +54,7 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
     skills: initialData?.skills || [],
   });
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -45,7 +75,7 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
   };
 
   const handleRemoveExperience = (index: number) => {
-    const newExp = formData.experience.filter((_: any, i: number) => i !== index);
+    const newExp = formData.experience.filter((_: WorkExperienceForm, i: number) => i !== index);
     setFormData((prev) => ({ ...prev, experience: newExp }));
   };
 
@@ -156,7 +186,7 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
           <p className="text-sm text-text-muted italic text-center py-4">Belum ada pengalaman kerja yang ditambahkan.</p>
         ) : (
           <div className="space-y-8">
-            {formData.experience.map((exp: any, index: number) => (
+            {formData.experience.map((exp: WorkExperienceForm, index: number) => (
               <div key={index} className="p-5 border border-border rounded-lg bg-surface-muted relative group">
                 <button 
                   type="button"

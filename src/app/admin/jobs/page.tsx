@@ -1,11 +1,12 @@
 import { createServerClient } from "@/lib/supabase/server";
 import { Plus, Search, MoreVertical, Database } from "lucide-react";
+import { Job } from "@/types";
 
 export default async function AdminJobsPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
-  
-  let jobs: any[] = [];
+
+  let jobs: Job[] = [];
   
   if (!isMockEnv) {
     const supabase = await createServerClient();
@@ -14,15 +15,38 @@ export default async function AdminJobsPage() {
       .select("id, title, company_name, source, is_active, posted_date")
       .order("posted_date", { ascending: false })
       .limit(20); // Just fetch 20 for MVP table
-        
-    jobs = data || [];
+
+    // Process data to avoid calling Date() in render
+    jobs = (data || []).map(job => ({
+      ...job,
+      formattedPostDate: new Date(job.posted_date).toLocaleDateString('id-ID')
+    }));
   }
 
   // Mock data
   if (jobs.length === 0 && isMockEnv) {
+    const now = new Date();
+    const yesterday = new Date(now.getTime() - 86400000); // 24 hours ago
+
     jobs = [
-      { id: "1", title: "Frontend Engineer", company_name: "Tech Corp", source: "linkedin", is_active: true, posted_date: new Date().toISOString() },
-      { id: "2", title: "Product Designer", company_name: "Creative Studio", source: "manual", is_active: false, posted_date: new Date(Date.now() - 86400000).toISOString() },
+      {
+        id: "1",
+        title: "Frontend Engineer",
+        company_name: "Tech Corp",
+        source: "linkedin",
+        is_active: true,
+        posted_date: now.toISOString(),
+        formattedPostDate: now.toLocaleDateString('id-ID')
+      },
+      {
+        id: "2",
+        title: "Product Designer",
+        company_name: "Creative Studio",
+        source: "manual",
+        is_active: false,
+        posted_date: yesterday.toISOString(),
+        formattedPostDate: yesterday.toLocaleDateString('id-ID')
+      },
     ];
   }
 
@@ -91,7 +115,7 @@ export default async function AdminJobsPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-white/60">
-                      {new Date(job.posted_date).toLocaleDateString('id-ID')}
+                      {job.formattedPostDate}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button className="p-2 hover:bg-white/10 rounded-md transition-colors">

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { createServerClient } from "@/lib/supabase/server";
 import { ChevronLeft, Briefcase, Building2, MapPin } from "lucide-react";
 import CopyButton from "@/components/ui/CopyButton";
@@ -67,7 +68,7 @@ export default async function CoverLetterDetailPage({ params }: CoverLetterPageP
         <div className="bg-surface border border-border rounded-xl p-6 mb-8 flex items-center gap-4">
           <div className="w-12 h-12 rounded-lg bg-surface-muted border border-border flex items-center justify-center overflow-hidden shrink-0">
             {job.company_logo_url ? (
-              <img src={job.company_logo_url} alt={job.company_name} className="w-full h-full object-cover" />
+              <Image src={job.company_logo_url} alt={job.company_name} width={60} height={60} className="w-full h-full object-cover" />
             ) : (
               <Building2 className="w-6 h-6 text-text-subtle" />
             )}

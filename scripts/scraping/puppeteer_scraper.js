@@ -1,7 +1,8 @@
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import cheerio from "cheerio";
+
 puppeteer.use(StealthPlugin());
-const cheerio = require("cheerio");
 
 async function scrapeGlints(browser, limit) {
   const page = await browser.newPage();
@@ -9,7 +10,7 @@ async function scrapeGlints(browser, limit) {
     await page.goto("https://glints.com/id/opportunities/jobs/explore?keyword=developer", { waitUntil: "domcontentloaded", timeout: 30000 });
     // wait an extra second for React to render
     await new Promise(r => setTimeout(r, 2000));
-  } catch(e) {
+  } catch {
     // Ignore timeout, try to extract anyway
   }
   const html = await page.content();
@@ -85,7 +86,7 @@ async function scrapeRemotive(browser, limit) {
         id: j.id.toString(), title: j.title, company: j.company_name, company_logo: j.company_logo || "", location: j.candidate_required_location || "Remote", job_type: j.job_type || "full-time", description: j.description || "", apply_url: j.url, date_posted: j.publication_date || new Date().toISOString()
     }));
     return jobs.slice(0, limit);
-  } catch(e) {
+  } catch {
     return [];
   }
 }
@@ -95,7 +96,7 @@ async function scrapeDealls(browser, limit) {
   try {
       await page.goto("https://dealls.com/lowongan-kerja", { waitUntil: "domcontentloaded", timeout: 30000 });
       await new Promise(r => setTimeout(r, 2000));
-  } catch(e) {
+  } catch {
   }
   const html = await page.content();
   const $ = cheerio.load(html);

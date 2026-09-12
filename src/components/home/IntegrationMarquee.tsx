@@ -47,7 +47,7 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof PLAT
         {items.map((item, i) => (
           <div key={i} className="flex items-center gap-3 px-5 py-3 bg-[#141416]/50 hover:bg-[#141416] backdrop-blur-sm border border-white/5 hover:border-white/20 rounded-2xl transition-all duration-300 shadow-card cursor-pointer group-hover:opacity-40 hover:!opacity-100">
             <div className="w-10 h-10 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-inner p-1">
-              <img src={item.logo} alt={item.name} className="w-full h-full object-contain rounded-md" loading="lazy" onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff` }} />
+              <Image src={item.logo} alt={item.name} width={40} height={40} className="w-full h-full object-contain rounded-md" />
             </div>
             <span className="text-white/80 font-medium whitespace-nowrap text-sm">{item.name}</span>
           </div>
@@ -61,7 +61,7 @@ const MarqueeRow = ({ items, reverse = false, speed = 40 }: { items: typeof PLAT
         {items.map((item, i) => (
           <div key={i + items.length} className="flex items-center gap-3 px-5 py-3 bg-[#141416]/50 hover:bg-[#141416] backdrop-blur-sm border border-white/5 hover:border-white/20 rounded-2xl transition-all duration-300 shadow-card cursor-pointer group-hover:opacity-40 hover:!opacity-100">
             <div className="w-10 h-10 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 flex items-center justify-center shrink-0 overflow-hidden shadow-inner p-1">
-              <img src={item.logo} alt={item.name} className="w-full h-full object-contain rounded-md" loading="lazy" onError={(e) => { e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.name)}&background=random&color=fff` }} />
+              <Image src={item.logo} alt={item.name} width={40} height={40} className="w-full h-full object-contain rounded-md" />
             </div>
             <span className="text-white/80 font-medium whitespace-nowrap text-sm">{item.name}</span>
           </div>
@@ -76,7 +76,7 @@ export default function IntegrationMarquee() {
     <section className="py-24 relative overflow-hidden flex flex-col items-center justify-center" id="integrations">
       {/* Background glow effects */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[300px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container-content relative z-10 text-center mb-16">
         <motion.p
@@ -94,7 +94,7 @@ export default function IntegrationMarquee() {
           transition={{ delay: 0.1 }}
           className="text-h2 text-white mb-6 italic"
         >
-          Terkoneksi dengan <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">100+ Platform & Perusahaan</span>
+          Terkoneksi dengan <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">100+ Platform & Perusahaan</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 10 }}

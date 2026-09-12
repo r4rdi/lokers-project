@@ -1,5 +1,5 @@
 // ===========================
-// Domain Types — Lokers!
+// Domain Types - Lokers!
 // Based on MVP.md Section 3
 // ===========================
 

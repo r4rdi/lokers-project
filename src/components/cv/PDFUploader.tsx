@@ -4,8 +4,33 @@ import { useState, useRef } from "react";
 import { UploadCloud, File as FileIcon, X, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface ParsedCVData {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedin: string;
+  github: string;
+  summary: string;
+  experience: Array<{
+    title: string;
+    company: string;
+    startDate: string;
+    endDate: string;
+    description: string;
+  }>;
+  education: Array<{
+    institution: string;
+    degree: string;
+    field: string;
+    startDate: string;
+    endDate: string;
+  }>;
+  skills: string[];
+}
+
 interface PDFUploaderProps {
-  onUploadSuccess: (parsedData: any) => void;
+  onUploadSuccess: (parsedData: ParsedCVData) => void;
 }
 
 export default function PDFUploader({ onUploadSuccess }: PDFUploaderProps) {
@@ -75,9 +100,10 @@ export default function PDFUploader({ onUploadSuccess }: PDFUploaderProps) {
       }
 
       onUploadSuccess(json.data);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setError(err.message || "Terjadi kesalahan saat menghubungi server.");
+      const message = err instanceof Error ? err.message : "Terjadi kesalahan saat menghubungi server.";
+      setError(message);
     } finally {
       setIsUploading(false);
     }

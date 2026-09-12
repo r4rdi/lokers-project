@@ -1,6 +1,27 @@
+// Mock data calculated outside of render to avoid impure function calls
+const mockAlerts = [
+  {
+    id: "1",
+    keyword: "Frontend Developer",
+    location: "Jakarta",
+    job_type: "full-time",
+    frequency: "daily",
+    is_active: true,
+    created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+  },
+  {
+    id: "2",
+    keyword: "UI/UX Designer",
+    location: null,
+    job_type: "remote",
+    frequency: "weekly",
+    is_active: false,
+    created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+  }
+];
+
 import { createServerClient } from "@/lib/supabase/server";
-import { Bell, Plus, Search, MapPin, MoreVertical } from "lucide-react";
-import Link from "next/link";
+import { Bell, Plus, MapPin, MoreVertical } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 
@@ -8,11 +29,12 @@ export default async function JobAlertsPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
   
-  let alerts: any[] = [];
+  let alerts: Array<{ id: string; keyword: string; location: string | null; job_type: string; frequency: string; is_active: boolean; created_at: string }> = [];
   
   if (!isMockEnv) {
     const supabase = await createServerClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
+    const user = data?.user;
     
     if (user) {
       const { data } = await supabase
@@ -27,26 +49,7 @@ export default async function JobAlertsPage() {
 
   // Mock data if empty for layout presentation
   if (alerts.length === 0 && isMockEnv) {
-    alerts = [
-      {
-        id: "1",
-        keyword: "Frontend Developer",
-        location: "Jakarta",
-        job_type: "full-time",
-        frequency: "daily",
-        is_active: true,
-        created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-      },
-      {
-        id: "2",
-        keyword: "UI/UX Designer",
-        location: null,
-        job_type: "remote",
-        frequency: "weekly",
-        is_active: false,
-        created_at: new Date(Date.now() - 86400000 * 5).toISOString(),
-      }
-    ];
+    alerts = mockAlerts;
   }
 
   return (

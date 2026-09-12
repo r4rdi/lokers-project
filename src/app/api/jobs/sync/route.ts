@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 
 import { runScraping } from "@/domains/scraping/services/orchestrator.service";
 
@@ -7,22 +6,16 @@ export async function GET(req: Request) {
   try {
     // For MVP, we'll allow anyone to hit this endpoint to sync jobs.
     // In production, you would add an authorization header check (e.g. cron secret).
-    
+
     console.log("Starting Scraping Orchestrator...");
-    
+
     // We can define which sources to run here.
     const results = await runScraping(["jobicy", "remotive", "glints", "jobstreet", "linkedin", "dealls"], 20);
-
-    let totalInserted = 0;
-    let totalUpdated = 0;
-    
-    const allowedSources = ['linkedin', 'indeed', 'glints', 'jobstreet', 'manual', 'employer'];
-
 
     // Calculate totals for response
     const totalFound = results.reduce((sum, res) => sum + res.jobsFound, 0);
     // Add jobsInserted from orchestrator AND route fallback
-    const totalInsertedAll = totalInserted + results.reduce((sum, res) => sum + res.jobsInserted, 0);
+    const totalInsertedAll = results.reduce((sum, res) => sum + res.jobsInserted, 0);
 
     return NextResponse.json({
       success: true,

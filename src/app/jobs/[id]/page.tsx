@@ -1,23 +1,21 @@
-import { Suspense } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createServerClient } from "@/lib/supabase/server";
 import { type Job } from "@/types";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import GenerateCoverLetterButton from "@/components/jobs/GenerateCoverLetterButton";
-import { 
-  MapPin, 
-  Briefcase, 
-  DollarSign, 
-  Clock, 
-  Bookmark, 
+import {
+  MapPin,
+  Briefcase,
+  DollarSign,
+  Clock,
+  Bookmark,
   Building2,
   ChevronLeft,
-  Share2,
-  ExternalLink,
-  Sparkles
+  ExternalLink
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
@@ -152,9 +150,11 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                   {/* Logo */}
                   <div className="w-20 h-20 rounded-xl border border-border bg-surface-muted flex items-center justify-center shrink-0 overflow-hidden">
                     {job.company_logo_url ? (
-                      <img 
-                        src={job.company_logo_url} 
+                      <Image
+                        src={job.company_logo_url}
                         alt={`Logo ${job.company_name}`}
+                        width={120}
+                        height={120}
                         className="w-full h-full object-cover"
                       />
                     ) : (

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
-const pdfParse = require("pdf-parse");
+import pdfParse from "pdf-parse";
 
 // We need to disable body parsing for this route to handle multipart/form-data natively or via request.formData()
 // Actually, next/server Request object has .formData() built-in.
@@ -102,10 +102,11 @@ Kembalikan HANYA JSON murni yang sesuai dengan struktur berikut, tanpa tag markd
 
     return NextResponse.json({ success: true, data: parsedData });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error("PDF Parsing/AI Error:", error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal Server Error", message: error.message },
+      { error: "Internal Server Error", message },
       { status: 500 }
     );
   }

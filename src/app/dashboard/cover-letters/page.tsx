@@ -1,5 +1,21 @@
+// Mock data calculated outside of render to avoid impure function calls
+const mockLetters = [
+  {
+    id: "1",
+    jobs: { title: "Software Engineer", company_name: "Gojek" },
+    content: "Yth. HRD Gojek,\n\nMelalui surat ini saya bermaksud melamar posisi Software Engineer...",
+    created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
+  },
+  {
+    id: "2",
+    jobs: null, // manual job
+    content: "Yth. HRD PT Teknologi Modern,\n\nSaya memiliki pengalaman 3 tahun...",
+    created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+  }
+];
+
 import { createServerClient } from "@/lib/supabase/server";
-import { Plus, Sparkles, FileType2, MoreVertical, Clock, Download } from "lucide-react";
+import { Sparkles, FileType2, MoreVertical, Clock, Download } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
@@ -8,11 +24,12 @@ export default async function CoverLettersHistoryPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
   
-  let letters: any[] = [];
+  let letters: Array<{ id: string; jobs: { title: string; company_name: string } | null; content: string; created_at: string }> = [];
   
   if (!isMockEnv) {
     const supabase = await createServerClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
+    const user = data?.user;
     
     if (user) {
       // Join with jobs table if possible, for MVP we just fetch the letters
@@ -28,20 +45,7 @@ export default async function CoverLettersHistoryPage() {
 
   // Mock data if empty for layout presentation
   if (letters.length === 0 && isMockEnv) {
-    letters = [
-      {
-        id: "1",
-        jobs: { title: "Software Engineer", company_name: "Gojek" },
-        content: "Yth. HRD Gojek,\n\nMelalui surat ini saya bermaksud melamar posisi Software Engineer...",
-        created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
-      },
-      {
-        id: "2",
-        jobs: null, // manual job
-        content: "Yth. HRD PT Teknologi Modern,\n\nSaya memiliki pengalaman 3 tahun...",
-        created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
-      }
-    ];
+    letters = mockLetters;
   }
 
   return (
@@ -98,7 +102,7 @@ export default async function CoverLettersHistoryPage() {
                   {letter.jobs ? `${letter.jobs.title} - ${letter.jobs.company_name}` : "Posisi Kustom (Manual)"}
                 </h3>
                 <p className="text-xs text-text-muted line-clamp-3 italic bg-surface-muted p-2 rounded-md border border-border/50">
-                  "{letter.content.substring(0, 100)}..."
+                  {letter.content.substring(0, 100) + "..."}
                 </p>
               </div>
               

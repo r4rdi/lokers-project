@@ -61,8 +61,9 @@ export default function NewJobPage() {
 
       router.push("/employer/jobs");
       router.refresh();
-    } catch (error: any) {
-      setErrorMsg(error.message || "Terjadi kesalahan. Silakan coba lagi.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Terjadi kesalahan. Silakan coba lagi.";
+      setErrorMsg(message);
       setIsSubmitting(false);
     }
   };
@@ -195,7 +196,7 @@ export default function NewJobPage() {
         </div>
 
         <div className="bg-surface border border-border p-6 rounded-2xl space-y-6">
-          <h2 className="text-xl font-bold text-ink border-b border-border pb-4">Deskripsi & Syarat</h2>
+          <h2 className="text-xl font-bold text-ink border-b border-border pb-4">Deskripsi &amp; Syarat</h2>
           
           <div className="space-y-6">
             <div className="space-y-2">
@@ -236,7 +237,7 @@ export default function NewJobPage() {
                 className="w-full p-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-ink"
               />
               <p className="text-xs text-text-muted">
-                Jika diisi, pelamar akan diarahkan ke link ini saat menekan tombol "Lamar". Jika dikosongkan, fitur "Lamar dengan Lokers.biz.id" akan digunakan (segera hadir).
+                Jika diisi, pelamar akan diarahkan ke link ini saat menekan tombol &apos;Lamar&apos;. Jika dikosongkan, fitur &apos;Lamar dengan Lokers.biz.id&apos; akan digunakan (segera hadir).
               </p>
               {errors.apply_url && <p className="text-xs text-error">{errors.apply_url.message}</p>}
             </div>

@@ -1,5 +1,5 @@
 import { createServerClient } from "@/lib/supabase/server";
-import { Bookmark, Briefcase, MapPin, DollarSign, Clock, ExternalLink, Trash2 } from "lucide-react";
+import { Briefcase, MapPin, DollarSign, Clock, ExternalLink, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
@@ -18,7 +18,23 @@ export default async function BookmarksPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
   
-  let bookmarks: any[] = [];
+  interface BookmarkData {
+  id: string;
+  created_at: string;
+  jobs: {
+    id: string;
+    title: string;
+    company_name: string;
+    location: string;
+    job_type: string;
+    salary_min: number;
+    salary_max: number;
+    salary_currency: string;
+    posted_date: string;
+  } | null;
+}
+
+let bookmarks: BookmarkData[] = [];
   
   if (!isMockEnv) {
     const supabase = await createServerClient();
@@ -37,23 +53,7 @@ export default async function BookmarksPage() {
 
   // Mock data if empty for layout presentation
   if (bookmarks.length === 0 && isMockEnv) {
-    bookmarks = [
-      {
-        id: "1",
-        created_at: new Date().toISOString(),
-        jobs: {
-          id: "j1",
-          title: "Frontend Engineer",
-          company_name: "Tech Corp",
-          location: "Jakarta",
-          job_type: "full-time",
-          salary_min: 10000000,
-          salary_max: 20000000,
-          salary_currency: "IDR",
-          posted_date: new Date(Date.now() - 86400000 * 2).toISOString(),
-        }
-      }
-    ];
+    bookmarks = [mockBookmark];
   }
 
   return (

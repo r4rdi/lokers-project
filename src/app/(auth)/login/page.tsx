@@ -3,7 +3,7 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Briefcase, ArrowRight, Mail, AlertCircle } from "lucide-react";
+import { Briefcase, ArrowRight, AlertCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 function LoginForm() {
@@ -66,7 +66,7 @@ function LoginForm() {
         <div className="relative z-10">
           <div className="p-6 rounded-xl bg-white/5 border border-white/10 glass-subtle max-w-sm">
             <p className="text-sm text-white/80 italic mb-4">
-              "Lokers membuat proses melamar kerja yang tadinya membosankan menjadi sangat mudah. Saya dapat panggilan interview hanya dalam 3 hari!"
+              &ldquo;Lokers membuat proses melamar kerja yang tadinya membosankan menjadi sangat mudah. Saya dapat panggilan interview hanya dalam 3 hari!&rdquo;
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/30" />

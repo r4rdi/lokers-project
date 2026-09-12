@@ -4,17 +4,12 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Search,
-  MapPin,
   Sparkles,
   FileText,
   Zap,
   Shield,
   ArrowRight,
   Check,
-  Briefcase,
-  Star,
-  Clock,
-  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import IntegrationMarquee from "@/components/home/IntegrationMarquee";

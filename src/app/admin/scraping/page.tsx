@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { ScrapingLog } from "@/types";
 
@@ -18,7 +18,7 @@ export default function ScrapingDashboard() {
   const [location, setLocation] = useState("Indonesia");
   const [limit, setLimit] = useState(10);
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("scraping_logs")
@@ -28,13 +28,13 @@ export default function ScrapingDashboard() {
 
       if (error) throw error;
       setLogs(data || []);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error fetching logs:", err);
       setError("Failed to load scraping logs.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [supabase]);
 
   useEffect(() => {
     fetchLogs();
@@ -49,7 +49,7 @@ export default function ScrapingDashboard() {
           schema: 'public',
           table: 'scraping_logs',
         },
-        (payload) => {
+        () => {
           fetchLogs();
         }
       )
@@ -58,7 +58,7 @@ export default function ScrapingDashboard() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [fetchLogs]);
 
   const handleTriggerScraping = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,7 +85,7 @@ export default function ScrapingDashboard() {
 
       // Delay fetching logs slightly to allow the script to insert the initial log
       setTimeout(fetchLogs, 1000);
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message);
     } finally {
       setTriggering(false);

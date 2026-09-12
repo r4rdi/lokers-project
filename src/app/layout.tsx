@@ -35,13 +35,13 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: "https://lokers.biz.id",
     siteName: "Lokers!",
-    title: "Lokers! — AI Job Portal Anti Ribet",
+    title: "Lokers! - AI Job Portal Anti Ribet",
     description:
       "Temukan lowongan kerja dan buat surat lamaran profesional dalam hitungan detik dengan AI.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lokers! — AI Job Portal Anti Ribet",
+    title: "Lokers! - AI Job Portal Anti Ribet",
     description:
       "Temukan lowongan kerja dan buat surat lamaran profesional dalam hitungan detik dengan AI.",
   },

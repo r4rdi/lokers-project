@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { MapPin, Briefcase, DollarSign, Clock, Bookmark, Building2, Globe, ExternalLink } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Bookmark, Building2, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { id } from "date-fns/locale";
 import { type Job } from "@/types";
@@ -94,9 +95,11 @@ export default function JobCard({ job, featured = false }: JobCardProps) {
         </div>
         <div className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center shrink-0 overflow-hidden shadow-inner">
           {job.company_logo_url ? (
-            <img
+            <Image
               src={job.company_logo_url}
               alt={`Logo ${job.company_name}`}
+              width={40}
+              height={40}
               className="w-full h-full object-cover"
             />
           ) : (
