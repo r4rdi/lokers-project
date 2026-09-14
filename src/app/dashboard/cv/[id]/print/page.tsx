@@ -8,7 +8,7 @@ import { Loader2, ZoomIn, ZoomOut, Download, Printer } from "lucide-react";
 export default function CVPrintPage() {
   const params = useParams();
   const id = params.id as string;
-  const [cvData, setCvData] = useState<any>(null);
+  const [cvData, setCvData] = useState<CVData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -18,7 +18,7 @@ export default function CVPrintPage() {
       try {
         const supabase = createClient();
         const { data: { session } } = await supabase.auth.getSession();
-        
+
         if (!session) {
           // If no session (e.g. mock env), just show mock data
           setCvData({
@@ -64,8 +64,8 @@ export default function CVPrintPage() {
         }
 
         setCvData(data.data); // data is the JSON column containing the parsed info
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
         setLoading(false);
       }
