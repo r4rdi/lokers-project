@@ -3,12 +3,13 @@ import { Plus, FileText, MoreVertical, Star, Clock } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { id as localeId } from "date-fns/locale";
+import type { CV } from "@/types/index";
 
 export default async function CVListPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
   
-  let cvs: any[] = [];
+  let cvs: CV[] = [];
   
   if (!isMockEnv) {
     const supabase = await createServerClient();
@@ -72,7 +73,7 @@ export default async function CVListPage() {
             <div key={cv.id} className={`bg-surface border rounded-xl p-5 flex flex-col h-full transition-all hover:shadow-card relative ${cv.is_primary ? 'border-primary shadow-subtle' : 'border-border'}`}>
               
               {cv.is_primary && (
-                <div className="absolute -top-3 right-5 px-3 py-1 bg-primary text-on-primary text-xs font-bold rounded-pill shadow-subtle flex items-center gap-1">
+                <div className="absolute -top-3 right-5 px-3 py-1 bg-primary text-on-primary text-xs font-bold rounded-md shadow-subtle flex items-center gap-1">
                   <Star className="w-3 h-3 fill-current" />
                   Utama
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { UploadCloud, File as FileIcon, X, CheckCircle2, AlertCircle, Sparkles } from "lucide-react";
+import { UploadCloud, File as FileIcon, X, AlertCircle, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ParsedCVData {

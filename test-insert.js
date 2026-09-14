@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 process.loadEnvFile('.env.local');
 const { createClient } = require('@supabase/supabase-js');
-const https = require('https');
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 https.get('https://jobicy.com/api/v2/remote-jobs?count=2&industry=engineering', (res) => {

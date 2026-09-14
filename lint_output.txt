@@ -1,8 +1,56 @@
-
-Oops! Something went wrong! :(
-
-ESLint: 9.39.5
-
-No files matching the pattern "src/app/jobs/[id]page.tsx" were found.
-Please check for typing mistakes in the pattern.
-
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\layout\Navbar.tsx[24m[0m
+[0m  [2m45:5[22m   [31merror[39m    Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mM:\coding\lokers-project\src\components\layout\Navbar.tsx:45:5[0m
+[0m  43 |   // Close menus on route change[0m
+[0m  44 |   useEffect(() => {[0m
+[0m> 45 |     setMobileOpen(prev => false);[0m
+[0m     |     ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  46 |   }, [pathname]);[0m
+[0m  47 |   useEffect(() => {[0m
+[0m  48 |     setUserMenuOpen(prev => false);  [2mreact-hooks/set-state-in-effect[22m[0m
+[0m  [2m45:19[22m  [33mwarning[39m  'prev' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m48:5[22m   [31merror[39m    Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mM:\coding\lokers-project\src\components\layout\Navbar.tsx:48:5[0m
+[0m  46 |   }, [pathname]);[0m
+[0m  47 |   useEffect(() => {[0m
+[0m> 48 |     setUserMenuOpen(prev => false);[0m
+[0m     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  49 |   }, [pathname]);[0m
+[0m  50 |   useEffect(() => {[0m
+[0m  51 |     setLangMenuOpen(prev => false);             [2mreact-hooks/set-state-in-effect[22m[0m
+[0m  [2m48:21[22m  [33mwarning[39m  'prev' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m51:5[22m   [31merror[39m    Error: Calling setState synchronously within an effect can trigger cascading renders[0m
+[0m[0m
+[0mEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:[0m
+[0m* Update external systems with the latest state from React.[0m
+[0m* Subscribe for updates from some external system, calling setState in a callback function when external state changes.[0m
+[0m[0m
+[0mCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).[0m
+[0m[0m
+[0mM:\coding\lokers-project\src\components\layout\Navbar.tsx:51:5[0m
+[0m  49 |   }, [pathname]);[0m
+[0m  50 |   useEffect(() => {[0m
+[0m> 51 |     setLangMenuOpen(prev => false);[0m
+[0m     |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect[0m
+[0m  52 |   }, [pathname]);[0m
+[0m  53 |[0m
+[0m  54 |   return (                                                          [2mreact-hooks/set-state-in-effect[22m[0m
+[0m  [2m51:21[22m  [33mwarning[39m  'prev' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[31m[1m✖ 6 problems (3 errors, 3 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

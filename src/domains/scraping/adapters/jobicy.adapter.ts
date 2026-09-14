@@ -19,7 +19,20 @@ export const jobicyAdapter: ScrapingAdapter = {
     }
 
     const data = await res.json();
-    const jobs: any[] = data.jobs || [];
+
+    // Define the shape of a job object from Jobicy API
+    interface JobicyJob {
+      id: string | number;
+      jobTitle: string;
+      companyName: string;
+      companyLogo?: string;
+      jobGeo?: string;
+      jobDescription: string;
+      pubDate: string;
+      url: string;
+    }
+
+    const jobs: JobicyJob[] = data.jobs || [];
 
     return jobs.map((job) => ({
       source: "jobicy",
@@ -28,7 +41,7 @@ export const jobicyAdapter: ScrapingAdapter = {
       companyName: job.companyName,
       companyLogoUrl: job.companyLogo,
       location: job.jobGeo || "Remote",
-      jobType: "remote", 
+      jobType: "remote",
       salaryCurrency: "USD",
       description: job.jobDescription,
       requirements: "",

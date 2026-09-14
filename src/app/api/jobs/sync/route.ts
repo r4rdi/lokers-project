@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { runScraping } from "@/domains/scraping/services/orchestrator.service";
 
 export async function GET(req: Request) {
+  void req;
   try {
     // For MVP, we'll allow anyone to hit this endpoint to sync jobs.
     // In production, you would add an authorization header check (e.g. cron secret).

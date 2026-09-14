@@ -7,20 +7,16 @@ export default async function AdminJobsPage() {
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
 
   let jobs: Job[] = [];
-  
+
   if (!isMockEnv) {
     const supabase = await createServerClient();
     const { data } = await supabase
       .from("jobs")
-      .select("id, title, company_name, source, is_active, posted_date")
+      .select("*")
       .order("posted_date", { ascending: false })
       .limit(20); // Just fetch 20 for MVP table
 
-    // Process data to avoid calling Date() in render
-    jobs = (data || []).map(job => ({
-      ...job,
-      formattedPostDate: new Date(job.posted_date).toLocaleDateString('id-ID')
-    }));
+    jobs = data || [];
   }
 
   // Mock data
@@ -34,18 +30,42 @@ export default async function AdminJobsPage() {
         title: "Frontend Engineer",
         company_name: "Tech Corp",
         source: "linkedin",
-        is_active: true,
+        source_id: "1",
+        company_logo_url: null,
+        location: "Indonesia",
+        job_type: "full-time",
+        salary_min: 5000000,
+        salary_max: 8000000,
+        salary_currency: "IDR",
+        description: "We are looking for a Frontend Engineer...",
+        requirements: "Experience with React...",
         posted_date: now.toISOString(),
-        formattedPostDate: now.toLocaleDateString('id-ID')
+        apply_url: null,
+        is_active: true,
+        created_by: null,
+        created_at: now.toISOString(),
+        updated_at: now.toISOString(),
       },
       {
         id: "2",
         title: "Product Designer",
         company_name: "Creative Studio",
         source: "manual",
-        is_active: false,
+        source_id: "2",
+        company_logo_url: null,
+        location: "Remote",
+        job_type: "full-time",
+        salary_min: 6000000,
+        salary_max: 9000000,
+        salary_currency: "IDR",
+        description: "We are looking for a Product Designer...",
+        requirements: "Experience with Figma...",
         posted_date: yesterday.toISOString(),
-        formattedPostDate: yesterday.toLocaleDateString('id-ID')
+        apply_url: null,
+        is_active: false,
+        created_by: null,
+        created_at: yesterday.toISOString(),
+        updated_at: yesterday.toISOString(),
       },
     ];
   }
@@ -68,8 +88,8 @@ export default async function AdminJobsPage() {
         <div className="p-4 border-b border-white/10 flex items-center justify-between bg-white/5">
           <div className="relative w-full max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Cari lowongan..."
               className="w-full pl-9 pr-4 py-2 rounded-md border border-white/10 bg-black/20 text-sm text-white focus:border-primary outline-none"
             />
@@ -115,7 +135,7 @@ export default async function AdminJobsPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-white/60">
-                      {job.formattedPostDate}
+                      {new Date(job.posted_date).toLocaleDateString('id-ID')}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button className="p-2 hover:bg-white/10 rounded-md transition-colors">

@@ -1,0 +1,36 @@
+
+> lokers-project@0.1.0 lint
+> eslint
+
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\cvs\parse-pdf\route.ts[24m[0m
+[0m  [2m100:14[22m  [33mwarning[39m  '_' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\employer\Sidebar.tsx[24m[0m
+[0m  [2m30:5[22m  [33mwarning[39m  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  [2m@next/next/no-location-assign-relative-destination[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\home\IntegrationMarquee.tsx[24m[0m
+[0m  [2m4:10[22m  [33mwarning[39m  'Globe' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\jobs\JobFilters.tsx[24m[0m
+[0m  [2m23:9[22m  [33mwarning[39m  'searchParams' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\proxy.ts[24m[0m
+[0m  [2m37:51[22m  [33mwarning[39m  '_' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m43:51[22m  [33mwarning[39m  '_' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-glints.js[24m[0m
+[0m  [2m14:11[22m  [33mwarning[39m  'apply_url' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-insert.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-unused-vars')[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-jobstreet-extract.js[24m[0m
+[0m  [2m16:11[22m  [33mwarning[39m  'allText' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-signup.mjs[24m[0m
+[0m  [2m13:11[22m  [33mwarning[39m  'data' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[33m[1m✖ 10 problems (0 errors, 10 warnings)[22m[39m[0m
+[0m[33m[1m[22m[39m[33m[1m  0 errors and 1 warning potentially fixable with the `--fix` option.[22m[39m[0m
+[0m[33m[1m[22m[39m[0m

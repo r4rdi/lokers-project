@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { createServerClient } from "@/lib/supabase/server";
 import { Shield, ShieldAlert, ShieldCheck, MoreVertical } from "lucide-react";
 

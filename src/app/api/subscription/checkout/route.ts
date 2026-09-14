@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       message: "This is a mock checkout. In production, this would redirect to Stripe."
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Checkout error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },

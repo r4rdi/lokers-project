@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { createServerClient } from "@/lib/supabase/server";
 import { ChevronLeft, Briefcase, Building2, MapPin } from "lucide-react";
-import CopyButton from "@/components/ui/CopyButton";
 import CoverLetterViewer from "./CoverLetterViewer";
 import { format } from "date-fns";
 import { id as localeId } from "date-fns/locale";

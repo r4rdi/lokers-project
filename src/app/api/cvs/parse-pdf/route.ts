@@ -86,7 +86,7 @@ Kembalikan HANYA JSON murni yang sesuai dengan struktur persis berikut, tanpa ta
         contents: prompt
     });
     let jsonText = (response.text || "").trim();
-    
+
     // Clean up potential markdown blocks if Gemini still outputs them
     if (jsonText.startsWith('```json')) {
       jsonText = jsonText.replace(/^```json/, '').replace(/```$/, '').trim();
@@ -97,14 +97,14 @@ Kembalikan HANYA JSON murni yang sesuai dengan struktur persis berikut, tanpa ta
     let parsedData;
     try {
       parsedData = JSON.parse(jsonText);
-    } catch (parseErr) {
+    } catch {
       console.error("Failed to parse Gemini output as JSON:", jsonText);
       throw new Error("AI mengembalikan format yang tidak valid.");
     }
 
     return NextResponse.json({ success: true, data: parsedData });
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("PDF Parsing/AI Error:", error);
     const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(

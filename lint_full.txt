@@ -1,0 +1,85 @@
+[0m[0m
+[0m[4mM:\coding\lokers-project\clean-duplicates.ts[24m[0m
+[0m  [2m2:13[22m  [33mwarning[39m  'dotenv' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\admin\scraping\page.tsx[24m[0m
+[0m  [2m37:6[22m  [33mwarning[39m  React Hook useCallback has a missing dependency: 'supabase'. Either include it or remove the dependency array  [2mreact-hooks/exhaustive-deps[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\admin\users\page.tsx[24m[0m
+[0m  [2m1:8[22m  [33mwarning[39m  'Link' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\cvs\parse-pdf\route.ts[24m[0m
+[0m  [2m100:14[22m  [33mwarning[39m  'parseErr' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\api\jobs\sync\route.ts[24m[0m
+[0m  [2m5:27[22m  [33mwarning[39m  'req' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\dashboard\cover-letters\[id]\page.tsx[24m[0m
+[0m  [2m7:8[22m  [33mwarning[39m  'CopyButton' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\app\dashboard\cv\[id]\print\page.tsx[24m[0m
+[0m  [2m6:46[22m  [33mwarning[39m  'Printer' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\cv\PDFUploader.tsx[24m[0m
+[0m  [2m4:44[22m  [33mwarning[39m  'CheckCircle2' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\dashboard\Sidebar.tsx[24m[0m
+[0m  [2m33:5[22m  [33mwarning[39m  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  [2m@next/next/no-location-assign-relative-destination[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\employer\Sidebar.tsx[24m[0m
+[0m  [2m30:5[22m  [33mwarning[39m  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  [2m@next/next/no-location-assign-relative-destination[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\home\IntegrationMarquee.tsx[24m[0m
+[0m  [2m4:10[22m  [33mwarning[39m  'Globe' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\jobs\GenerateCoverLetterButton.tsx[24m[0m
+[0m  [2m43:19[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\components\jobs\JobFilters.tsx[24m[0m
+[0m  [2m23:9[22m  [33mwarning[39m  'searchParams' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\dealls.adapter.ts[24m[0m
+[0m  [2m28:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\glints.adapter.ts[24m[0m
+[0m  [2m27:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\jobicy.adapter.ts[24m[0m
+[0m  [2m22:17[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\jobstreet.adapter.ts[24m[0m
+[0m  [2m33:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\adapters\remotive.adapter.ts[24m[0m
+[0m  [2m28:65[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\normalizers\job.normalizer.ts[24m[0m
+[0m  [2m52:9[22m  [31merror[39m  'clean' is never reassigned. Use 'const' instead  [2mprefer-const[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\services\ingestion.service.ts[24m[0m
+[0m  [2m63:17[22m  [31merror[39m  Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\domains\scraping\services\orchestrator.service.ts[24m[0m
+[0m  [2m1:27[22m  [33mwarning[39m  'ScrapingInput' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\src\proxy.ts[24m[0m
+[0m  [2m37:48[22m  [33mwarning[39m  'options' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-db-insert.js[24m[0m
+[0m  [2m1:15[22m  [31merror[39m  A `require()` style import is forbidden  [2m@typescript-eslint/no-require-imports[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-glints.js[24m[0m
+[0m  [2m14:11[22m  [33mwarning[39m  'apply_url' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-insert.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/no-unused-vars')[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-jobstreet-extract.js[24m[0m
+[0m  [2m16:11[22m  [33mwarning[39m  'allText' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mM:\coding\lokers-project\test-signup.mjs[24m[0m
+[0m  [2m13:11[22m  [33mwarning[39m  'data' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[31m[1m✖ 27 problems (9 errors, 18 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[31m[1m  1 error and 1 warning potentially fixable with the `--fix` option.[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

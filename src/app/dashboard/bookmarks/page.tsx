@@ -16,7 +16,7 @@ const formatSalaryText = (min: number | null, max: number | null, currency: stri
 export default async function BookmarksPage() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const isMockEnv = !supabaseUrl || supabaseUrl.includes("placeholder");
-  
+
   interface BookmarkData {
   id: string;
   created_at: string;
@@ -34,24 +34,39 @@ export default async function BookmarksPage() {
 }
 
 let bookmarks: BookmarkData[] = [];
-  
+
   if (!isMockEnv) {
     const supabase = await createServerClient();
     const { data: { user } } = await supabase.auth.getUser();
-    
+
     if (user) {
       const { data } = await supabase
         .from("bookmarks")
         .select("id, created_at, jobs(*)")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
-        
+
       bookmarks = data || [];
     }
   }
 
   // Mock data if empty for layout presentation
   if (bookmarks.length === 0 && isMockEnv) {
+    const mockBookmark: BookmarkData = {
+      id: "1",
+      created_at: new Date().toISOString(),
+      jobs: {
+        id: "1",
+        title: "Frontend Engineer",
+        company_name: "Tech Corp",
+        location: "Jakarta",
+        job_type: "full-time",
+        salary_min: 5000000,
+        salary_max: 8000000,
+        salary_currency: "IDR",
+        posted_date: new Date().toISOString(),
+      },
+    };
     bookmarks = [mockBookmark];
   }
 
@@ -73,7 +88,7 @@ let bookmarks: BookmarkData[] = [];
           <p className="text-body text-text-muted max-w-sm mb-6">
             Anda belum menyimpan lowongan apa pun. Jelajahi lowongan pekerjaan sekarang.
           </p>
-          <Link 
+          <Link
             href="/jobs"
             className="flex items-center justify-center px-6 py-3 bg-primary hover:bg-primary-hover text-on-primary font-bold rounded-md transition-colors shadow-subtle"
           >
@@ -85,7 +100,7 @@ let bookmarks: BookmarkData[] = [];
           {bookmarks.map((bookmark) => {
             const job = bookmark.jobs;
             if (!job) return null;
-            
+
             return (
               <div key={bookmark.id} className="bg-surface border border-border rounded-xl p-5 flex flex-col h-full transition-all hover:shadow-card group">
                 <div className="flex justify-between items-start mb-4 gap-4">
@@ -95,7 +110,7 @@ let bookmarks: BookmarkData[] = [];
                     </Link>
                     <p className="text-sm text-text-muted mt-1">{job.company_name}</p>
                   </div>
-                  
+
                   {/* Real app would use a client component for unfavoriting */}
                   <button className="text-text-subtle hover:text-error transition-colors p-2 -mr-2" title="Hapus Bookmark">
                     <Trash2 className="w-5 h-5" />
@@ -117,15 +132,15 @@ let bookmarks: BookmarkData[] = [];
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between mt-auto pt-4 border-t border-border">
+                <div className="flex items-center justify-between mt_auto pt-4 border_t border-border">
                   <div className="flex items-center gap-1.5 text-xs text-text-subtle">
                     <Clock className="w-3.5 h-3.5" />
                     <span>
                       Disimpan {formatDistanceToNow(new Date(bookmark.created_at), { addSuffix: true, locale: localeId })}
                     </span>
                   </div>
-                  
-                  <Link 
+
+                  <Link
                     href={`/jobs/${job.id}`}
                     className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-hover"
                   >

@@ -1,4 +1,4 @@
-import { ScrapingAdapter, ScrapingInput, ScrapingResult } from "../types";
+import { ScrapingAdapter, ScrapingResult } from "../types";
 import { ingestJobs } from "./ingestion.service";
 import { glintsAdapter } from "../adapters/glints.adapter";
 import { remotiveAdapter } from "../adapters/remotive.adapter";
@@ -39,9 +39,10 @@ export async function runScraping(sources: string[] = ["jobicy", "glints"], limi
       
       console.log(`[Orchestrator] Finished ${source}: ${result.status} (${result.jobsInserted} inserted, ${result.jobsSkipped} skipped)`);
       
-    } catch (error: any) {
-      console.error(`[Orchestrator] Fatal error running ${source}:`, error);
-      
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`[Orchestrator] Fatal error running ${source}:`, errorMessage);
+
       // We log total failure as a result too
       results.push({
         source,
@@ -50,7 +51,7 @@ export async function runScraping(sources: string[] = ["jobicy", "glints"], limi
         jobsInserted: 0,
         jobsUpdated: 0,
         jobsSkipped: 0,
-        errorMessage: error.message,
+        errorMessage: errorMessage,
         startedAt: new Date().toISOString(),
         finishedAt: new Date().toISOString()
       });

@@ -65,7 +65,7 @@
   --radius-md: 14px;
   --radius-lg: 20px;
   --radius-xl: 28px;
-  --radius-pill: 999px;
+  --radius-pill: 16px;
 
   /* Layout */
   --layout-max: 1280px;

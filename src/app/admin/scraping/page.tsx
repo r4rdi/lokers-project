@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { ScrapingLog } from "@/types";
 
 export default function ScrapingDashboard() {
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
   const [logs, setLogs] = useState<ScrapingLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [triggering, setTriggering] = useState(false);
@@ -28,13 +28,14 @@ export default function ScrapingDashboard() {
 
       if (error) throw error;
       setLogs(data || []);
-    } catch (err) {
-      console.error("Error fetching logs:", err);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error("Error fetching logs:", message);
       setError("Failed to load scraping logs.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [supabase]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -96,8 +97,9 @@ export default function ScrapingDashboard() {
 
       // Delay fetching logs slightly to allow the script to insert the initial log
       setTimeout(fetchLogs, 1000);
-    } catch (err) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message);
     } finally {
       setTriggering(false);
     }

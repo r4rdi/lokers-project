@@ -32,7 +32,7 @@ export default async function AdminDashboard() {
   const statCards = [
     { label: "Total Pengguna", value: stats.users, icon: Users, color: "text-blue-500" },
     { label: "Total Lowongan", value: stats.jobs, icon: Database, color: "text-green-500" },
-    { label: "Scraping Selesai", value: stats.scraping_logs, icon: CheckCircle2, color: "text-purple-500" },
+    { label: "Scraping Selesai", value: stats.scraping_logs, icon: CheckCircle2, color: "text-green-500" },
     { label: "Laporan Error", value: "0", icon: ShieldAlert, color: "text-red-500" },
   ];
 

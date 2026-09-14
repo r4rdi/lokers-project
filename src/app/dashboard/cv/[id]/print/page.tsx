@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useParams } from "next/navigation";
-import { Loader2, ZoomIn, ZoomOut, Download, Printer } from "lucide-react";
+import { Loader2, ZoomIn, ZoomOut, Download } from "lucide-react";
+import type { CVData, WorkExperience, Education } from "@/types/index";
 
 export default function CVPrintPage() {
   const params = useParams();
@@ -190,7 +191,7 @@ export default function CVPrintPage() {
                     Pengalaman Kerja
                   </h2>
                   <div className="space-y-5">
-                    {cvData.experience.map((exp: any, index: number) => (
+                    {cvData.experience.map((exp: WorkExperience, index: number) => (
                       <div key={index}>
                         <div className="flex justify-between items-baseline mb-1">
                           <h3 className="text-base font-bold text-gray-900">{exp.title}</h3>
@@ -217,7 +218,7 @@ export default function CVPrintPage() {
                     Pendidikan
                   </h2>
                   <div className="space-y-4">
-                    {cvData.education.map((edu: any, index: number) => (
+                    {cvData.education.map((edu: Education, index: number) => (
                       <div key={index}>
                         <div className="flex justify-between items-baseline mb-1">
                           <h3 className="text-base font-bold text-gray-900">{edu.institution}</h3>

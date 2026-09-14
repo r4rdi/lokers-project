@@ -30,22 +30,54 @@ export const jobstreetAdapter: ScrapingAdapter = {
           const jobsData = JSON.parse(jsonStr);
           
           // Map to standard format
-          const mappedJobs: RawJobRecord[] = jobsData.map((job: any) => ({
-            source: "jobstreet",
-            sourceId: `jobstreet-${job.id}`,
-            title: job.title,
-            companyName: job.company,
-            companyLogoUrl: job.company_logo || "",
-            location: job.location,
-            jobType: job.job_type,
-            salary: job.salary,
-            experience: job.experience,
-            description: job.description,
-            requirements: "",
-            postedDate: job.date_posted,
-            applyUrl: job.apply_url,
-            raw: job
-          }));
+          // Define the shape of a job object from Jobstreet puppeteer script
+          interface JobstreetJob {
+            id: string | number;
+            title: string;
+            company: string;
+            company_logo?: string;
+            location: string;
+            job_type: string;
+            salary?: string;
+            experience?: string;
+            description: string;
+            date_posted: string;
+            apply_url: string;
+          }
+
+          // Define the shape of a job object from Jobstreet puppeteer script
+          interface JobstreetJob {
+            id: string | number;
+            title: string;
+            company: string;
+            company_logo?: string;
+            location: string;
+            job_type: string;
+            salary?: string;
+            experience?: string;
+            description: string;
+            date_posted: string;
+            apply_url: string;
+          }
+
+          const mappedJobs: RawJobRecord[] = jobsData.map((job: JobstreetJob) => {
+            return {
+              source: "jobstreet",
+              sourceId: `jobstreet-${job.id}`,
+              title: job.title,
+              companyName: job.company,
+              companyLogoUrl: job.company_logo || "",
+              location: job.location,
+              jobType: job.job_type,
+              salary: job.salary,
+              experience: job.experience,
+              description: job.description,
+              requirements: "",
+              postedDate: job.date_posted,
+              applyUrl: job.apply_url,
+              raw: job
+            };
+          });
           
           resolve(mappedJobs);
         } catch (parseError) {

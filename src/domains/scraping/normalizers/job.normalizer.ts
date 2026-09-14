@@ -20,13 +20,13 @@ function normalizeTitle(title: string): string {
  */
 function normalizeJobType(rawType?: string): 'full-time' | 'part-time' | 'contract' | 'internship' | 'remote' {
   if (!rawType) return 'full-time'; // default fallback
-  
+
   const lower = rawType.toLowerCase();
   if (lower.includes("remote") || lower.includes("jarak jauh")) return 'remote';
   if (lower.includes("part-time") || lower.includes("paruh waktu")) return 'part-time';
   if (lower.includes("contract") || lower.includes("kontrak")) return 'contract';
   if (lower.includes("intern") || lower.includes("magang")) return 'internship';
-  
+
   return 'full-time';
 }
 
@@ -49,7 +49,7 @@ function parseSalary(salaryStr?: string | null): { min: number | null; max: numb
   let max = 0;
 
   const parseNum = (str: string) => {
-    let clean = str.replace(/\./g, '').replace(/,/g, '.');
+    const clean = str.replace(/\./g, '').replace(/,/g, '.');
     let num = parseFloat(clean);
     if (s.includes('jt') || s.includes('juta')) {
       if (num < 1000) num = num * 1000000;
@@ -75,15 +75,15 @@ export function normalizeJob(raw: RawJobRecord & { salary?: string; experience?:
   // This solves the issue of scrapers returning different URLs/timestamps for the same job
   const safeCompany = (raw.companyName || "unknown").toLowerCase().replace(/[^a-z0-9]/g, "-");
   const safeTitle = (raw.title || "job").toLowerCase().replace(/[^a-z0-9]/g, "-");
-  let source_id = `${raw.source}-${safeCompany}-${safeTitle}`.replace(/-+/g, '-').slice(0, 150);
+  const source_id = `${raw.source}-${safeCompany}-${safeTitle}`.replace(/-+/g, '-').slice(0, 150);
 
   const parsedSalary = parseSalary(raw.salary);
-  let min = raw.salaryMin || parsedSalary.min;
-  let max = raw.salaryMax || parsedSalary.max;
-  let curr = raw.salaryCurrency || parsedSalary.currency;
+  const min = raw.salaryMin || parsedSalary.min;
+  const max = raw.salaryMax || parsedSalary.max;
+  const curr = raw.salaryCurrency || parsedSalary.currency;
 
   let finalDesc = raw.description ? stripHtml(raw.description) : "Tidak ada deskripsi rinci.";
-  
+
   // Append experience if it's missing from description but we found it
   if (raw.experience && !finalDesc.includes(raw.experience)) {
       finalDesc = `Pengalaman: ${raw.experience}\n\n` + finalDesc;

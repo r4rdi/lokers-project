@@ -1,0 +1,7 @@
+[0m[0m
+[0m[4mM:\coding\lokers-project\scripts\scraping\puppeteer_scraper.js[24m[0m
+[0m   [2m13:12[22m  [33mwarning[39m  '_' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m128:12[22m  [33mwarning[39m  '_' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[33m[1m✖ 2 problems (0 errors, 2 warnings)[22m[39m[0m
+[0m[33m[1m[22m[39m[0m

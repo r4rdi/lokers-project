@@ -60,10 +60,14 @@ export async function ingestJobs(source: string, rawJobs: RawJobRecord[]): Promi
         jobsInserted++; 
       }
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(`[Ingestion] Critical failure for ${source}:`, err);
     status = "failed";
-    errorMessage = err.message;
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    } else {
+      errorMessage = String(err);
+    }
   }
 
   const finishedAt = new Date().toISOString();

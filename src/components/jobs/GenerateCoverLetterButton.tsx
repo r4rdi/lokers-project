@@ -40,9 +40,10 @@ export default function GenerateCoverLetterButton({ jobId }: GenerateCoverLetter
 
       // Success, redirect to the viewer page
       router.push(`/dashboard/cover-letters/${data.coverLetterId}`);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      setError(err.message);
+      const message = err instanceof Error ? err.message : 'An unexpected error occurred';
+      setError(message);
     } finally {
       setIsGenerating(false);
     }

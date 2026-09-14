@@ -4,13 +4,6 @@ import { NextResponse, type NextRequest } from "next/server";
 // Routes that require authentication
 const PROTECTED_ROUTES = ["/dashboard", "/employer", "/admin"];
 
-// Routes only for specific roles
-const ROLE_ROUTES: Record<string, string[]> = {
-  admin: ["/admin"],
-  employer: ["/employer"],
-  job_seeker: ["/dashboard"],
-};
-
 // Auth routes (redirect to dashboard if already logged in)
 const AUTH_ROUTES = ["/login", "/register", "/reset-password"];
 
@@ -41,14 +34,14 @@ export async function proxy(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
             request,
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+          cookiesToSet.forEach(({ name, value }) =>
+            supabaseResponse.cookies.set(name, value)
           );
         },
       },

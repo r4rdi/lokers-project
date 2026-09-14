@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { 
-  LayoutDashboard, 
-  Briefcase, 
-  PlusCircle, 
+import { usePathname, useRouter } from "next/navigation";
+import {
+  LayoutDashboard,
+  Briefcase,
+  PlusCircle,
   Settings,
   LogOut,
   BarChart
@@ -23,11 +23,12 @@ const navItems = [
 
 export default function EmployerSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleLogout = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
-    window.location.href = "/";
+    router.push("/");
   };
 
   return (

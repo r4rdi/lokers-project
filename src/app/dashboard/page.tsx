@@ -59,8 +59,8 @@ export default async function DashboardOverview() {
       label: "Cover Letter Dibuat",
       value: (clCount || 0).toString(),
       icon: Sparkles,
-      color: "text-purple-500",
-      bgColor: "bg-purple-50",
+      color: "text-blue-500",
+      bgColor: "bg-blue-50",
     },
     {
       label: "Lowongan Disimpan",

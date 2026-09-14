@@ -10,7 +10,7 @@ async function testProfilesInsert() {
   console.log('Testing insert into profiles table...');
   const fakeId = '00000000-0000-0000-0000-000000000001'; // Not in auth.users, will fail FK constraint
 
-  const { data, error } = await supabase.from('profiles').insert({
+  const { error } = await supabase.from('profiles').insert({
     id: fakeId,
     email: 'test@example.com',
     full_name: 'Test',

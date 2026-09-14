@@ -6,16 +6,17 @@ import { createClient } from "@/lib/supabase/client";
 import { Sparkles, Save, Download, FileText, ChevronLeft, Briefcase, FileType2 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import type { CV, Job } from "@/types/index";
 
 export default function CreateCoverLetterPage() {
   const router = useRouter();
-  const [cvs, setCvs] = useState<any[]>([]);
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [cvs, setCvs] = useState<CV[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   
   const [selectedCv, setSelectedCv] = useState<string>("");
   const [jobInputType, setJobInputType] = useState<"saved" | "manual">("manual");
   const [selectedJobId, setSelectedJobId] = useState<string>("");
-  const [manualJobData, setManualJobData] = useState({
+  const [manualJobData, setManualJobData] = useState<{ title: string; company: string; description: string }>({
     title: "",
     company: "",
     description: ""

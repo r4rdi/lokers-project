@@ -10,8 +10,9 @@ async function scrapeGlints(browser, limit) {
     await page.goto("https://glints.com/id/opportunities/jobs/explore?keyword=developer", { waitUntil: "domcontentloaded", timeout: 30000 });
     // wait an extra second for React to render
     await new Promise(r => setTimeout(r, 2000));
-  } catch (e) {
+  } catch (_) {
     // Ignore timeout, try to extract anyway
+    void _;
   }
   const html = await page.content();
   const $ = cheerio.load(html);
@@ -29,6 +30,7 @@ async function scrapeGlints(browser, limit) {
     $(el).find('span').each((_, span) => {
       const txt = $(span).text().trim();
       if(txt) spans.push(txt);
+      void _;
     });
 
     let salary = null;
@@ -95,6 +97,7 @@ async function scrapeJobstreet(browser, limit) {
       const text = $(span).text().trim();
       if (text.includes('Rp') || text.includes('IDR')) salary = text;
       if (text.toLowerCase().includes('waktu') || text.toLowerCase().includes('kontrak') || text.toLowerCase().includes('full-time') || text.toLowerCase().includes('paruh')) job_type = text;
+      void _;
     });
 
     const description = $(el).find('span[data-automation="jobShortDescription"]').text().trim() || "";
@@ -125,8 +128,9 @@ async function scrapeDealls(browser, limit) {
   try {
       await page.goto("https://dealls.com/lowongan-kerja", { waitUntil: "domcontentloaded", timeout: 30000 });
       await new Promise(r => setTimeout(r, 2000));
-  } catch (e) {
+  } catch (_) {
     // Ignore timeout
+    void _;
   }
   const html = await page.content();
   const $ = cheerio.load(html);
@@ -144,6 +148,7 @@ async function scrapeDealls(browser, limit) {
         const text = $(span).text().trim();
         if (text.includes('IDR') || text.includes('Rp') || text.includes('Juta')) salary = text;
         if (text.toLowerCase().includes('waktu') || text.toLowerCase().includes('kontrak') || text.toLowerCase().includes('full')) job_type = text;
+        void _;
       });
 
       jobs.push({
