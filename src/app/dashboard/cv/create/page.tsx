@@ -43,7 +43,7 @@ export default function CreateCVPage() {
     setParsedData(data);
   };
 
-  const handleSubmit = async (formData: ParsedCVData) => {
+  const handleSubmit = async (formData: any) => {
     setIsSaving(true);
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -121,7 +121,7 @@ export default function CreateCVPage() {
           </div>
           
           <CVForm 
-            initialData={parsedData} 
+            initialData={parsedData as any} 
             onSubmit={handleSubmit} 
             isLoading={isSaving} 
           />

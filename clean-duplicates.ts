@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+
 import { readFileSync } from 'fs';
 
 // simple dotenv parse since package might not be installed globally

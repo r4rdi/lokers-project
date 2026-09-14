@@ -54,7 +54,7 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
     skills: initialData?.skills || [],
   });
 
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -68,7 +68,7 @@ export default function CVForm({ initialData, onSubmit, isLoading = false }: CVF
     }));
   };
 
-  const handleUpdateExperience = (index: number, field: string, value: string) => {
+  const handleUpdateExperience = (index: number, field: keyof WorkExperienceForm, value: string) => {
     const newExp = [...formData.experience];
     newExp[index][field] = value;
     setFormData((prev) => ({ ...prev, experience: newExp }));

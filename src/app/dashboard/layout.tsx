@@ -16,6 +16,11 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  // Redirect admin to admin panel if they try to access standard dashboard
+  if (user.email === "rardiansyah3421@gmail.com") {
+    redirect("/admin/jobs");
+  }
+
   return (
     <div className="flex min-h-screen bg-background">
       {/* Desktop Sidebar */}

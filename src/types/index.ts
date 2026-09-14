@@ -97,6 +97,7 @@ export interface Job {
   posted_date: string;
   apply_url: string | null;
   is_active: boolean;
+  is_featured?: boolean;
   created_by: string | null;
   created_at: string;
   updated_at: string;

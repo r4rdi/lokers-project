@@ -22,44 +22,59 @@ export default async function AdminLayout({
     .eq("id", user.id)
     .single();
 
-  // In Mock env, allow it. In real env, check role.
-  const isMockEnv = !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder");
-  if (!isMockEnv && profile?.role !== "admin") {
-    redirect("/dashboard"); // Non-admin users go to normal dashboard
+  // Hardcode admin access for specific email
+  if (user.email !== "rardiansyah3421@gmail.com") {
+    redirect("/dashboard"); 
   }
 
   return (
-    <div className="flex min-h-screen bg-ink text-white">
+    <div className="flex min-h-screen bg-[#0a0a0a] text-white font-sans relative overflow-hidden">
+      {/* Decorative Gradients (Orange & Blue) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[140px] pointer-events-none" />
+
       {/* Admin Sidebar */}
-      <aside className="w-64 bg-ink-soft border-r border-white/10 h-screen flex flex-col sticky top-0">
+      <aside className="w-64 bg-white/[0.02] backdrop-blur-xl border-r border-white/10 h-screen flex flex-col sticky top-0 z-10">
         <div className="p-6">
-          <Link href="/" className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 rounded-md bg-error flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-2 mb-8 px-2">
+            <div className="w-8 h-8 rounded-md bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
               <Briefcase className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-extrabold tracking-tight text-white">
-              Lokers<span className="text-error">! Admin</span>
+            <span className="text-xl font-extrabold tracking-tight text-white drop-shadow-md">
+              Lokers<span className="text-blue-500">!</span>
             </span>
           </Link>
 
+          {/* User Profile Snippet */}
+          <div className="mb-8 px-2 flex flex-col items-center border-b border-white/10 pb-6">
+            <div className="w-16 h-16 rounded-full bg-white/10 mb-3 overflow-hidden border-2 border-white/20 shadow-sm flex items-center justify-center backdrop-blur-md">
+              <span className="text-xl font-bold text-white/50">
+                {user.email?.[0].toUpperCase() || "A"}
+              </span>
+            </div>
+            <h3 className="text-sm font-bold text-white line-clamp-1">{user.email}</h3>
+            <p className="text-xs text-white/40 mt-1">Super Administrator</p>
+          </div>
+
           <nav className="space-y-1">
-            <Link href="/admin" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium hover:bg-white/10 transition-colors">
-              <LayoutDashboard className="w-4 h-4" /> Overview
+            <Link href="/admin" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-white/60 hover:bg-white/5 hover:text-white transition-colors">
+              <LayoutDashboard className="w-4 h-4" /> Dashboard
             </Link>
-            <Link href="/admin/jobs" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium hover:bg-white/10 transition-colors">
-              <Database className="w-4 h-4" /> Manajemen Data Lowongan
+            <Link href="/admin/jobs" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium bg-blue-500/10 text-blue-400 transition-colors relative border border-blue-500/20">
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-500 rounded-r-full shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+              <Database className="w-4 h-4" /> Manajemen Lowongan
             </Link>
-            <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium hover:bg-white/10 transition-colors text-text-subtle">
-              <LogOut className="w-4 h-4" /> Keluar ke Dashboard
+            <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-white/60 hover:bg-white/5 hover:text-white transition-colors">
+              <LogOut className="w-4 h-4" /> Exit to App
             </Link>
           </nav>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen max-w-full overflow-hidden z-10">
         <main className="flex-1 overflow-y-auto p-8">
-          <div className="max-w-6xl mx-auto">
+          <div className="mx-auto h-full">
             {children}
           </div>
         </main>
